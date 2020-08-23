@@ -1,4 +1,9 @@
 baseURL = "http://blog.without.hosting/"
 languageCode = "en-us"
-title = "Experiments in Web"
+title = "Without hosting"
 theme = "ananke"
+pygmentsCodefences = true
+pygmentsStyle = "pygments"
+pygmentsUseClasses = true
+[params]
+    custom_css = ["./syntax.css"]
