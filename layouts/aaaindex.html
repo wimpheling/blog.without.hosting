@@ -1,0 +1,10 @@
+{{ define "title" }}
+  {{ title (i18n (lower .Title)) | default .Title }} · {{ .Site.Title }}
+{{ end }}
+{{ define "content" }}
+  <section class="container list">
+    Welcome to my blog.
+    
+    <a href="/posts">See all the articles here</a>
+  </section>
+{{ end }}
