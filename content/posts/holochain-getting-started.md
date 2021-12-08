@@ -5,13 +5,17 @@ draft: false
 toc: true
 ---
 
-This is a full tutorial on how to create, build and deploy a Holochain [0.0.117](https://github.com/holochain/holochain/releases/tag/holochain-0.0.117) app. 
+This is a full step-by-step tutorial on how to create, build and deploy locally a Holochain [0.0.117](https://github.com/holochain/holochain/releases/tag/holochain-0.0.117) app. 
 
-You will find detailed instructions to create a minimal working project from scratch, with only the mandatory dependencies.
+This tutorial does not explain how to use Holochain to build a meaningful app : it is rather a guide to help you set up a working local environment with an empty project, so that you can easily start your Holochain development journey.
+
+You will find detailed instructions to create a minimal working project from scratch, with only the mandatory dependencies, and then run it locally.
+
+The full code for this tutorial is available here : https://github.com/wimpheling/holochain-getting-started-example
 
 # Technical environment
 
-We will create a happ called AddTen, that has the very useful purpose of adding 10 to a number provided by the user as input. It will consist of two main parts, **backend** and **frontend** :
+We will create a happ called `my-holochain-app`, that has the very useful purpose of adding 10 to a number provided by the user as input. It will consist of two main parts, **backend** and **frontend** :
 
 - The **backend** of the app is the proper P2P holochain application. It is the piece of software that will manage a shared DHT between all runing nodes. Like traditional backends, it will be in charge of data integrity, authorization/authentication etc. 
   
@@ -174,7 +178,7 @@ use hdk::prelude::*;
 
 #[derive(Serialize, Deserialize, SerializedBytes, Debug, Clone)]
 pub struct ZomeInput {
-    pub number: i32,
+    pub original_number: i32,
 }
 
 // data we want back from holochain
@@ -345,6 +349,17 @@ Congratulations ! Your hApp is now running. Let's now build a Client App so we c
 
 Before we move on to that, please notice I have skipped writing tests, so for now we can't really tell if our app works. The tests will maybe be handled in another post.
 
+## Cheatsheet : recompiling and relaunching the app
+
+As you can see, the tooling is still rudimentary, so when you edit your zomes here is a quick sequence of the commands you need to run: 
+```bash
+# if you're not in nix-shell run : nix-shell https://nightly.holochain.love
+CARGO_TARGET_DIR=target cargo build --release --target wasm32-unknown-unknown
+hc dna pack dnas/math
+hc app pack my-happ
+hc sandbox generate my-happ --run=8888
+``` 
+
 # The Frontend/client (typescript) app
 
 ## Environment
@@ -398,7 +413,7 @@ First, let's define the input and output typescript types, so that they match th
 // my-holochain-app/hc-ui/src/addTen.ts
 
 interface ZomeInput {
-  number: number;
+  original_number: number;
 }
 
 interface ZomeOutput {
@@ -406,11 +421,174 @@ interface ZomeOutput {
 }
 ```
 
-# Bundling the whole app into Holochain Launcher
+As the typescript holochain library is very minimalistic, we will create our own client class, tailored to match our API, to be called from our TS app. We will export a function that works as a kind of factory: it will instantiate a Holochain client to discuss with our Holochain Rust backend, and return functions to call specific API endpoints of the backend. As an Holochain app is exposed as a Websocket server, we will also export a function that will close the connection when or if needed.
+
+**WARNING** : when testing the client, for now it seems the close function throws an error... TBD (to be debugged)
+
+First, we will need to add some imports from the `@holochain/conductor-api` module to the top of our file, as well as define some constants to define the different IDs we need to make our zome call correctly.
+```typescript
+// my-holochain-app/hc-ui/src/addTen.ts
+import { AppWebsocket, CallZomeRequest } from '@holochain/conductor-api';
+
+const WS_URL = 'ws://localhost:8888';
+// The name of the happ. For some reason it seems to always be "test-app" whatever name you choose in your hApp config ?
+const H_APP_ID = 'test-app';
+// The name of the zome
+const ZOME_NAME = 'numbers';
+// The name of the function
+const FN_NAME = 'add_ten';
+```
+
+We can the define the types, and write our `initMyHappClient` factory function.
+
+Here is how are proceeding (I have to remind you here, that I am a HC beginner, so my explanations about calling the zomes might be imprecise or even incorrect !).
+
+1. We first have to open a connection to the Websocket server at `localhost:8888`, using the `AppWebSocket` provided by the HC module.
+2. With this connection, we then call `appInfo`, to make sure our app does exist. We provide the `installed_app_id` parameter, and it should match the hApp name we had filled in the `happ.yaml` file of the Rust HC app. In our case, the value is `my-happ`.
+3. `appInfo` will return `cell_data` info. In my understanding, this allows us to get a less generic `cell_id`, which is a system ID for the current instantiation of the selected hApp on the node we are talking with. This `cell_id` is the one we will use to make actual zome/function calls.
+4. Making a zome/function call is what we do in the `addTen` method of our TS client. We will provide the `cell_id`, the zome name (here: numbers), the function name (here: add_ten), as well as the payload (here : the `ZomeInput` object). 
+  Note: There is also a `provenance` field. In this example, it is derived from the cell_id, because this demo happ doesn't handle multiple users, so every message will be signed by the node's agent key. Hoperfully in a next tutorial we will tackle the subject of user authentication in a hApp.
+
+```typescript
+// my-holochain-app/hc-ui/src/addTen.ts
+// This is the typing of our client API
+export type HolochainConductor = {
+    addTen: (baseNumber: number) => Promise<ZomeOutput>,
+    close: () => void
+}
+
+export const initMyHappClient = async (): Promise<HolochainConductor> => {
+  // 1. open a connection to the WebSocket server
+  const appClient = await AppWebsocket.connect(WS_URL)
+  // 2. Getting appInfo from the hApp name
+  const appInfo = await appClient.appInfo({ installed_app_id: H_APP_ID });
+  // 3. Check cell data
+  if (!appInfo?.cell_data[0]) {
+    throw new Error('No app info found');
+  }
+
+  return {
+    addTen: async (originalNumber: number) => {
+      const cell_id = appInfo?.cell_data[0].cell_id;
+      const payload: ZomeInput = { original_number: originalNumber };
+      // define the context of the request
+      const apiRequest: CallZomeRequest =
+      {
+        cap: null,
+        cell_id,
+        zome_name: ZOME_NAME,
+        fn_name: FN_NAME,
+        provenance: cell_id[1], // AgentPubKey,
+        payload
+      };
+    
+      // 4. Actual zome code
+      try {
+        // make the request
+        const numbersOutput: ZomeOutput = await appClient.callZome(apiRequest);
+        // the result is already deserialized
+        return numbersOutput
+      } catch (error) {
+        console.log('Got an error:', error);
+        throw error;
+      }
+    },
+    close: () => {
+      appClient.client.close();
+    }
+  }
+}
+```
+## Using the client API
+
+We have now created a client for our Rust hApp, let's create a very simple typescript app that actually calls it and lets us add 10 to a number of our choice.
+
+As said earlier, we will use no framework here because this is just a very simple demo app, and we want to focus on the holochain related code rather than boilerplate framework-specific code !
+
+So let's create the code. I will not comment it in detail as it is pretty standard. We're basically initializing the HC client, let the user enter a number and add 10 to it, and then we display the result.
+
+This code will replace the existing `main.ts` created by the Vite template.
+
+```typescript
+// my-holochain-app/hc-ui/src/main.ts
+import { HolochainConductor, initMyHappClient } from './addTen'
+import './style.css'
+
+const initApp = async (): Promise<void> => {
+  const app = document.querySelector<HTMLDivElement>('#app')!
+  app.innerHTML = `<h1>My-happ test</h1>
+  Your number: <input id="number-input" type="number" />
+  <br />
+  <button id="add10">Add 10</button>
+  <br />
+  <div id="result"></div>
+  `
+
+  let client: HolochainConductor
+  const resultPlaceholder = document.querySelector<HTMLInputElement>('#result')!;
+  
+  try {
+    client = await initMyHappClient();
+  } catch (e) {
+    resultPlaceholder.innerText = "Error initializing the client"
+  }
+
+  const addTenHandler = async () => { 
+    resultPlaceholder.innerText = ''
+    const numberInput = document.querySelector<HTMLInputElement>('#number-input')!;
+    const originalNumber = parseInt(numberInput.value)
+    if (isNaN(originalNumber)) {
+      resultPlaceholder.innerText = "Invalid number"
+      return
+    }
+    try {
+      const result = await client.addTen(originalNumber)
+      resultPlaceholder.innerText = `Result: ${result.other_number}`
+    } catch (e) {
+      resultPlaceholder.innerText = `There was an error while calling the zome`
+    }
+  }
+  const addTenButton = document.querySelector<HTMLInputElement>('#add10')!
+
+  addTenButton.onclick = addTenHandler
+}
+
+initApp()
+```
+## launching the UI app
+
+We said it earlier, but here is a quick reminder of the command that launches in the UI in case you stopped it:
+
+```bash
+npm run dev
+```
+
+# Verifying the app works
+
+You should now
+- have your holochain rust app running on `ws://localhost:8888`
+- have your client app running on `http://localhost:3000`
+
+And here is what is should look like :
+
+![Our happ is running](/img/holochain-getting-started-demo.gif)
+
 
 # Conclusion
 
-here are some defects I found during the course, it's mostly missing tooling that I'm sure the community will easily provide if the project gets some traction.
+I hope you found this tutorial useful. I actually created because, although some resources are available on the web, I recently started coding with Holochain and felt such a blog post was missing and I wanted to contribute.
+
+I plan to continue to document here my progress in using the Holochain framework. The next topics should be :
+- Using the DHT (read/write)
+- Bundling and running your app in [Holochain Launcher](https://github.com/holochain/launcher)
+- Configuring user access
+- Deploying on Holo.host (when it is available of course !)
+
+And to conclude and open the discussion, here are some defects I found during the course, it's mostly missing tooling that I'm sure the community will easily provide if the project gets some traction.
 
 - You need to rebuild zomes, then DNA, then happ for every change
 - it's not possible to automatically get typescript signatures for the zome function. Rust crates such as `wasm-bindgen` do provide that feature for the functions they export so maybe some existing code can be leveraged ?
+
+<!---
+If you want to contribute feedback, you can do so in the Holochain Forum, where I posted this article :
+-->
