@@ -172,7 +172,7 @@ serde = "1"
 
 ### Write the actual code
 
-Without going into too much detail, we will create here a simple "add ten" rust function as well as its input and output structs, and expose it in the holochain App by using the `#[hdx_extern]` annotation.
+Without going into too much detail, we will create here a simple "add ten" rust function as well as its input and output structs, and expose the function in the holochain App by using the `#[hdx_extern]` annotation.
 
 Let's just paste that code in `lib.rs`
 
