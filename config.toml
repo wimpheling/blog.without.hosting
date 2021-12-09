@@ -36,6 +36,9 @@ customSCSS = []
 # Custom JS
 customJS = []
 
+[params.googleTagManager]
+id = "G-PXR780XCW2"
+
 # [[params.social]]
 # name = "Github"
 # icon = "fa fa-2x fa-github"
