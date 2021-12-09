@@ -586,18 +586,18 @@ And here is what is should look like :
 
 # Conclusion
 
-I hope you found this tutorial useful. I actually created because, although some resources are available on the web, I recently started coding with Holochain and felt such a blog post was missing and I wanted to contribute.
+I hope you found this tutorial useful. I actually wrote it because, although some resources are available on the web, I recently started coding with Holochain and felt such a blog post was missing.
 
 I plan to continue to document here my progress in using the Holochain framework. The next topics should be :
 - Using the DHT (read/write)
-- Bundling and running your app in [Holochain Launcher](https://github.com/holochain/launcher)
+- Bundling and running your hApp in the [Holochain Launcher](https://github.com/holochain/launcher)
 - Configuring user access
 - Deploying on Holo.host (when it is available of course !)
 
-And to conclude and open the discussion, here are some defects I found during the course, it's mostly missing tooling that I'm sure the community will easily provide if the project gets some traction.
+And to conclude and open the discussion, here are some defects I found during the course, it's mostly missing tooling that I'm sure the team or the community will easily provide if the project gets some traction.
 
 - You need to rebuild zomes, then DNA, then happ for every change
-- it's not possible to automatically get typescript signatures for the zome function. Rust crates such as `wasm-bindgen` do provide that feature for the functions they export so maybe some existing code can be leveraged ?
+- it's not possible to automatically get typescript signatures for the exported zomes/hApp functions. Rust crates such as `wasm-bindgen` do provide that feature for the functions they export so maybe some existing code can be leveraged ?
 
 <!---
 If you want to contribute feedback, you can do so in the Holochain Forum, where I posted this article :
