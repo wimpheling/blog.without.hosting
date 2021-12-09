@@ -1,11 +1,11 @@
 ---
-title: "Holochain 0.0.117: Getting Started"
+title: "Holochain 0.0.119: Getting Started"
 date: 2021-12-01T15:17:40Z
 draft: false
 toc: true
 ---
 
-This is a full step-by-step tutorial on how to create, build and deploy locally a Holochain [0.0.117](https://github.com/holochain/holochain/releases/tag/holochain-0.0.117) app. 
+This is a full step-by-step tutorial on how to create, build and deploy locally a Holochain [0.0.119](https://github.com/holochain/holochain/releases/tag/holochain-0.0.119) app. 
 
 This tutorial does not explain how to use Holochain to build a meaningful app : it is rather a guide to help you set up a working local environment with an empty project, so that you can easily start your Holochain development journey.
 
@@ -26,6 +26,10 @@ We will create a happ called `my-holochain-app`, that has the very useful purpos
 - The **frontend**, or UI part of the hApp, is a **standard typescript browser app**. 
 
     You can use any JS framework to build your app, but for the purpose of this simple tutorial, we will only make a very **simple vanilla Typescript project**, in order to focus on Holochain itself rather than a JS library that the reader may not be familiar with.
+
+The following versions of the holochain libraries are used (this article will be updated frequently to use the latest releases):
+- [hdk](https://github.com/holochain/holochain/releases/) 0.0.116
+- [holochain_cli](https://crates.io/crates/holochain_cli) 0.0.20
 
 # Existing resources
 
@@ -61,7 +65,7 @@ hc --version
 and you should see
 
 ```bash
-holochain_cli 0.0.17
+holochain_cli 0.0.20
 ```
 
 > If your version is more recent, this means this blog post is outdated and may not be valid anymore. Sorry about that !
@@ -162,7 +166,7 @@ name = "numbers"
 crate-type = [ "cdylib", "rlib" ]
 
 [dependencies]
-hdk = "0.0.115"
+hdk = "0.0.116"
 serde = "1"
 ```
 
@@ -331,10 +335,14 @@ But remember, Holochain is still in alpha so surely with time dev tools will pro
 We're almost there ! From `nix-shell` we can now run our hApp locally, on the 8888 port using
 
 ```bash
-hc sandbox generate my-happ --run=8888
+hc sandbox generate my-happ --run=8888 -a "my-happ"
 ```
 
-You should then have this kind output (I shortened):
+We also use the `-a` to specify the name under which the happ should be deployed (the name you specify in the `happ.yaml` file is not taken into account).
+
+You can read more documentation about the hc sandbox here: https://github.com/holochain/holochain/tree/develop/crates/hc_sandbox
+
+You should then have this kind of output (I shortened):
 
 ```bash
 hc-sandbox: Creating 1 conductor sandboxes with same settings
@@ -354,10 +362,11 @@ Before we move on to that, please notice I have skipped writing tests, so for no
 As you can see, the tooling is still rudimentary, so when you edit your zomes here is a quick sequence of the commands you need to run: 
 ```bash
 # if you're not in nix-shell run : nix-shell https://holochain.love
+# you should be in the directory my-holochain-app/hc-app
 CARGO_TARGET_DIR=target cargo build --release --target wasm32-unknown-unknown
 hc dna pack dnas/math
 hc app pack my-happ
-hc sandbox generate my-happ --run=8888
+hc sandbox generate my-happ --run=8888 -a "my-happ"
 ``` 
 
 # The Frontend/client (typescript) app
@@ -433,7 +442,7 @@ import { AppWebsocket, CallZomeRequest } from '@holochain/conductor-api';
 
 const WS_URL = 'ws://localhost:8888';
 // The name of the happ. For some reason it seems to always be "test-app" whatever name you choose in your hApp config ?
-const H_APP_ID = 'test-app';
+const H_APP_ID = 'my-happ';
 // The name of the zome
 const ZOME_NAME = 'numbers';
 // The name of the function
