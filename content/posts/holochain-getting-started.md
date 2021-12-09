@@ -17,7 +17,7 @@ The full code for this tutorial is available here : https://github.com/wimphelin
 
 We will create a happ called `my-holochain-app`, that has the very useful purpose of adding 10 to a number provided by the user as input. It will consist of two main parts, **backend** and **frontend** :
 
-- The **backend** of the app is the proper P2P holochain application. It is the piece of software that will manage a shared DHT between all runing nodes. Like traditional backends, it will be in charge of data integrity, authorization/authentication etc. 
+- The **backend** of the app is the proper P2P holochain application. It is the piece of software that will manage a shared DHT between all running nodes. Like traditional backends, it will be in charge of data integrity, authorization/authentication etc. 
   
   It will be built upon the [holochain development kit (HDK)](https://docs.rs/hdk/latest/hdk/). For now, the HDK is only available for the [**Rust**](https://www.rust-lang.org/) language.
 
@@ -50,7 +50,7 @@ Holochain also provides a [cross-platform guide](https://developer.holochain.org
 Once this is done, you should be able to run
 
 ```bash
-nix-shell https://nightly.holochain.love
+nix-shell https://holochain.love
 ```
 Once in nix-shell, run 
 
@@ -97,7 +97,7 @@ cd hc-app
 
 ### Configuration of the rust workspace
 
-One particularity is that the main rust project we just created, will have no code, and is just a placeholder for zome crates. We need to reflect that in our code by
+One particularity is that the main rust project we just created, will have no code, and is just a placeholder for zome crates. We need to reflect that in our code by :
 
 - removing the scaffolded code
 
@@ -353,7 +353,7 @@ Before we move on to that, please notice I have skipped writing tests, so for no
 
 As you can see, the tooling is still rudimentary, so when you edit your zomes here is a quick sequence of the commands you need to run: 
 ```bash
-# if you're not in nix-shell run : nix-shell https://nightly.holochain.love
+# if you're not in nix-shell run : nix-shell https://holochain.love
 CARGO_TARGET_DIR=target cargo build --release --target wasm32-unknown-unknown
 hc dna pack dnas/math
 hc app pack my-happ
@@ -405,7 +405,7 @@ npm i @holochain/conductor-api
 
 We will now create the code to communicate with holochain. You can create a new file named `my-holochain-app/hc-ui/src/addTen.ts`.
 
-Unfortunately, Holochain currently provides no automatic bindings to typescript so we will need to write them ourselves. If you use Rust for the front-end that may help you getting correct bindings, but of course you will encounter the limit of the still nascent Rust web frontend ecosstem.
+Unfortunately, Holochain currently provides no automatic bindings to typescript so we will need to write them ourselves.
 
 First, let's define the input and output typescript types, so that they match the ones we defined in the Rust code.
 
@@ -426,6 +426,7 @@ As the typescript holochain library is very minimalistic, we will create our own
 **WARNING** : when testing the client, for now it seems the close function throws an error... TBD (to be debugged)
 
 First, we will need to add some imports from the `@holochain/conductor-api` module to the top of our file, as well as define some constants to define the different IDs we need to make our zome call correctly.
+
 ```typescript
 // my-holochain-app/hc-ui/src/addTen.ts
 import { AppWebsocket, CallZomeRequest } from '@holochain/conductor-api';
@@ -439,7 +440,7 @@ const ZOME_NAME = 'numbers';
 const FN_NAME = 'add_ten';
 ```
 
-We can the define the types, and write our `initMyHappClient` factory function.
+We can then define the types, and write our `initMyHappClient` factory function.
 
 Here is how are proceeding (I have to remind you here, that I am a HC beginner, so my explanations about calling the zomes might be imprecise or even incorrect !).
 
@@ -447,7 +448,7 @@ Here is how are proceeding (I have to remind you here, that I am a HC beginner, 
 2. With this connection, we then call `appInfo`, to make sure our app does exist. We provide the `installed_app_id` parameter, and it should match the hApp name we had filled in the `happ.yaml` file of the Rust HC app. In our case, the value is `my-happ`.
 3. `appInfo` will return `cell_data` info. In my understanding, this allows us to get a less generic `cell_id`, which is a system ID for the current instantiation of the selected hApp on the node we are talking with. This `cell_id` is the one we will use to make actual zome/function calls.
 4. Making a zome/function call is what we do in the `addTen` method of our TS client. We will provide the `cell_id`, the zome name (here: numbers), the function name (here: add_ten), as well as the payload (here : the `ZomeInput` object). 
-  Note: There is also a `provenance` field. In this example, it is derived from the cell_id, because this demo happ doesn't handle multiple users, so every message will be signed by the node's agent key. Hoperfully in a next tutorial we will tackle the subject of user authentication in a hApp.
+  Note: There is also a `provenance` field. In this example, it is derived from the cell_id, because this demo happ doesn't handle multiple users, so every message will be signed by the node's agent key. Hopefully in a next tutorial we will tackle the subject of user authentication in a hApp.
 
 ```typescript
 // my-holochain-app/hc-ui/src/addTen.ts
