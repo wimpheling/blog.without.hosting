@@ -338,7 +338,7 @@ We're almost there ! From `nix-shell` we can now run our hApp locally, on the 88
 hc sandbox generate my-happ --run=8888 -a "my-happ"
 ```
 
-We also use the `-a` to specify the name under which the happ should be deployed (the name you specify in the `happ.yaml` file is not taken into account).
+We also use the `-a` option to specify the name under which the happ should be deployed (the name you specify in the `happ.yaml` file is not taken into account).
 
 You can read more documentation about the hc sandbox here: https://github.com/holochain/holochain/tree/develop/crates/hc_sandbox
 
