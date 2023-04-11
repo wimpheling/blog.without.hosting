@@ -76,17 +76,19 @@ To incentivize miners and other stakeholders to participate in the Holochain net
 
  two sets of tasks that the DAI's LLM needs to handle:
 
-    Job: The LLM's primary responsibility is to offer its AI services to users. This can involve processing user requests, providing insights or solutions to complex problems, and delivering valuable services based on its specific training and capabilities.
+ - Job: The LLM's primary responsibility is to offer its AI services to users. This can involve processing user requests, providing insights or solutions to complex problems, and delivering valuable services based on its specific training and capabilities.
 
-    Management: In addition to its primary job, the LLM must also handle its own management and improvement. This includes:
+ - Training : recomputing models, LORAs, vector databases and such
 
-    a. Communicating with other actors in the ecosystem (users, developers, miners, and data providers).
+ - Management: In addition to its primary job, the LLM must also handle its own management and improvement. This includes:
 
-    b. Identifying areas of improvement, such as acquiring new datasets, updating its algorithms, or refining its models. This involves "thinking" about possible enhancements and assessing their potential value.
+    - a. Communicating with other actors in the ecosystem (users, developers, miners, and data providers).
 
-    c. Specifying and reviewing improvement tasks, allocating resources (such as DAI currency) to execute these tasks, and monitoring the progress of ongoing improvements.
+    - b. Identifying areas of improvement, such as acquiring new datasets, updating its algorithms, or refining its models. This involves "thinking" about possible enhancements and assessing their potential value.
 
-    d. Evaluating the effectiveness of completed improvements and incorporating feedback from users, developers, and other stakeholders to further refine the LLM's capabilities.
+    - c. Specifying and reviewing improvement tasks, allocating resources (such as DAI currency) to execute these tasks, and monitoring the progress of ongoing improvements.
+
+    - d. Evaluating the effectiveness of completed improvements and incorporating feedback from users, developers, and other stakeholders to further refine the LLM's capabilities.
 
 These two sets of tasks are essential for the LLM to maintain a competitive edge within the DAI ecosystem. As the LLM continuously improves, it can attract more users and generate higher demand for its services, which in turn increases the value of the DAI currency.
 
