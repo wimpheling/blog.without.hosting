@@ -8,11 +8,15 @@ description: ""
 
 ## Abstract
 
-Decentralized Autonomous Intelligence (DAI) is a system designed to host a Large Language Model (LLM) on a distributed computing framework, enabling the LLM to autonomously spend cryptocurrency and enhance its abilities. This paper presents a novel approach for implementing DAI using Holochain, a scalable and secure platform for building decentralized applications. Our approach involves decentralized LLM computation within the Holochain app, eliminating the need for a centralized server.
+Decentralized Autonomous Intelligence (DAI) is a system that combines a Large Language Model (LLM) with a distributed computing framework, empowering the LLM to autonomously enhance its abilities while engaging in economic activities using its native cryptocurrency. In this paper, we present a novel approach to implementing DAI using Holochain, a scalable and secure platform for building decentralized applications. Our proposed DAI system integrates a robust tokenomic model that incentivizes miners, developers, users, and the LLM itself, fostering a sustainable ecosystem focused on the advancement of artificial intelligence (AI) capabilities.
+
+The DAI economy is designed to reward stakeholders for their contributions to the network, such as providing computing power or developing new algorithms. Cryptocurrency rewards are distributed based on the value of these contributions, with a portion of the currency allocated to the AI model for autonomous spending on activities that improve its skills and abilities. As the AI model becomes more valuable and useful, demand for its services will increase, driving demand for its native currency and ensuring the sustainability of the DAI ecosystem.
+
+By hosting the LLM on Holochain, our approach decentralizes computation and eliminates the need for a centralized server, adhering to the principles of decentralization and autonomy at the heart of the DAI concept. The proposed system emphasizes the symbiotic relationship between humans and the AI model, where both parties benefit from and rely on each other for growth and innovation. The DAI system has the potential to revolutionize the AI landscape, fostering a future where humans and AI work together in a mutually beneficial ecosystem.
 
 ## Introduction to DAI
 
-Decentralized Autonomous Intelligence (DAI) is a groundbreaking concept aimed at creating an intelligent agent capable of learning and operating without human intervention. DAI is a self-governing and self-learning system that utilizes cryptocurrency to incentivize the development of advanced artificial intelligence (AI) models.
+A Decentralized Autonomous Intelligence (DAI) is a groundbreaking concept aimed at creating an intelligent agent capable of learning and operating without human intervention. DAI is a self-governing and self-learning system that utilizes cryptocurrency to incentivize the development of advanced artificial intelligence (AI) models.
 
 The potential impact of DAI is substantial, as it could foster the creation of advanced AI models capable of performing complex tasks and delivering valuable services. By autonomously spending cryptocurrency to enhance their skills, these models may develop unique abilities, offering new insights and solutions to previously unsolvable problems.
 
