@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 date: 2023-04-11T20:42:12+01:00
 toc: true
 title: "Decentralized Autonomous Intelligence - Introducing the DAI"
