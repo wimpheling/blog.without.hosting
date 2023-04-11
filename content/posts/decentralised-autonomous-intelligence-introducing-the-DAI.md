@@ -34,7 +34,23 @@ The DAI system encourages risk-taking and innovation, as the AI model's autonomy
 
 The DAI system's currency is designed to hold value both within and outside the network. Users can obtain something from the AI model by exchanging currency with it. In this system, miners earn cryptocurrency rewards and receive cryptocurrency for providing computing power to the AI model. The AI model uses the cryptocurrency it receives to pay miners for their services, and customers pay the AI model for the answers they receive.
 
-The DAI system is self-governing, operating based on predefined rules and incentives. These rules and incentives are designed to encourage stakeholders to act in the best interests of the network and the AI model while preventing any individual or group from dominating the system.
+### Economic roles
+
+In the DAI ecosystem, several economic roles interact with each other to create a set of incentives that keep the system running and maintain an exchange value for the DAI currency. These roles include:
+
+ - AI Model: The core component of the DAI system, the AI model autonomously spends the DAI currency to enhance its skills and abilities. It can purchase new datasets or hire developers to create new algorithms. As the AI model becomes more valuable and useful, the demand for its services increases, leading to increased demand for the native currency.
+
+ - Miners: Miners provide the computing power necessary to process user transactions and compute answers to user requests. They receive rewards in the form of the DAI currency based on their contributions to the network. This incentivizes them to continue providing computational resources to the AI model.
+
+ - Users: Users are the customers who seek AI solutions from the DAI model. They pay for the AI model's services using the native DAI currency. This means they must first acquire the currency to access the services, which creates demand for the currency.
+
+  - Developers: Developers contribute to the DAI ecosystem by creating new algorithms and improving the AI model's capabilities. They can be hired by the AI model, receiving payment in the form of DAI currency. This incentive encourages developers to work on enhancing the AI model's skills and abilities.
+
+ - Data Providers: Data providers offer datasets that the AI model can purchase to improve its knowledge base and learn new skills. They receive DAI currency in exchange for providing valuable data, which further incentivizes them to contribute to the ecosystem.
+
+ - Investors: Investors buy and hold the DAI currency, speculating on its future value. As the AI model becomes more capable and demand for its services grows, the value of the currency may increase. This potential for appreciation motivates investors to hold the currency and support the DAI ecosystem.
+
+These economic roles create a set of incentives that keep the DAI system running while maintaining an exchange value for the DAI currency. The ecosystem encourages risk-taking and innovation, fostering competition between different DAIs, each striving to offer unique services and solutions. The currency's value is directly linked to the AI model's usefulness and the demand for its services, making it essential for the DAI system to continually evolve and improve its AI model to maintain a sustainable and valuable platform.
 
 In summary, the DAI system's economic model aims to incentivize the development of advanced AI models while ensuring decentralization, autonomy, and self-governance. By using cryptocurrency to motivate network participation and AI model development, the DAI system seeks to establish a sustainable and valuable platform for advanced AI research and development.
 
@@ -55,6 +71,28 @@ To address the LLM's computational and storage requirements, we propose optimizi
 To ensure privacy and security, we propose implementing a layered security approach that encompasses privacy-preserving techniques and other security measures such as access control, authentication, and encryption. These measures will help protect sensitive data and ensure the system's resilience against attacks.
 
 To incentivize miners and other stakeholders to participate in the Holochain network, we propose a reward system that distributes cryptocurrency based on their contributions. This reward system aligns stakeholder interests with the overall objectives of the DAI system.
+
+### Resource allocation : the tasks of the LLM
+
+ two sets of tasks that the DAI's LLM needs to handle:
+
+    Job: The LLM's primary responsibility is to offer its AI services to users. This can involve processing user requests, providing insights or solutions to complex problems, and delivering valuable services based on its specific training and capabilities.
+
+    Management: In addition to its primary job, the LLM must also handle its own management and improvement. This includes:
+
+    a. Communicating with other actors in the ecosystem (users, developers, miners, and data providers).
+
+    b. Identifying areas of improvement, such as acquiring new datasets, updating its algorithms, or refining its models. This involves "thinking" about possible enhancements and assessing their potential value.
+
+    c. Specifying and reviewing improvement tasks, allocating resources (such as DAI currency) to execute these tasks, and monitoring the progress of ongoing improvements.
+
+    d. Evaluating the effectiveness of completed improvements and incorporating feedback from users, developers, and other stakeholders to further refine the LLM's capabilities.
+
+These two sets of tasks are essential for the LLM to maintain a competitive edge within the DAI ecosystem. As the LLM continuously improves, it can attract more users and generate higher demand for its services, which in turn increases the value of the DAI currency.
+
+A potential challenge in managing these tasks is balancing the resources (time, computational power, and currency) dedicated to each set of tasks. The LLM must strike an optimal balance to ensure that it continues to provide high-quality services to users while also focusing on its self-improvement.
+
+One possible approach to address this challenge is to introduce a priority-based system or a dynamic resource allocation strategy that adjusts the focus on job tasks and management tasks based on factors such as user demand, available resources, and the potential value of improvements. This adaptive approach can help the LLM efficiently allocate resources to maintain a competitive edge and maximize the benefits to the DAI ecosystem.
 
 ## Conclusion
 

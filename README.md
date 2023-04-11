@@ -19,3 +19,7 @@ hugo new posts/my-first-post.md
 ## Start the hugo server
 
  hugo server -D
+
+ # Deployment
+
+ Just commit. push, and check deployment on netlify (with gh account)
