@@ -1,7 +1,6 @@
 ---
 title: "Ai Web Framework"
 date: 2025-04-10T21:51:11+01:00
-draft: true
 ---
 
 For more efficiency with Cline and other programming agents, we need a franework that is more compatible with how agent works.
