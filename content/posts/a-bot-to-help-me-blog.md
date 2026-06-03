@@ -71,25 +71,19 @@ That is exactly what happened here. I posted a French message in a Discord group
 
 Which is a strange little loop: I built a bot to help me blog, then immediately used the explanation of the bot as the first thing for the bot to blog about.
 
-## The interesting constraint
-
-The most interesting design choice is that the bot does not own the publishing decision.
-
-It can help me externalize thoughts. It can propose structure. It can edit. It can remind me that a draft exists. It can make the next step smaller.
-
-But publishing remains mine.
-
-That boundary matters because writing is not only text generation. Publishing is a social act. It means: I stand behind this enough to put it on my site. I am okay with this being part of my public surface area.
-
-A bot can help with the friction before that moment. It can reduce the activation energy. It can make the draft less intimidating. But it should not silently cross the line from private working text to public statement.
-
-At least not for this use case.
-
 ## Will it actually work?
 
 No idea yet.
 
 I set this up yesterday, so this is very much an experiment. Maybe it will unblock me. Maybe I will ignore the nudges after a week. Maybe the most useful part will not be the writing itself, but the fact that I now have a conversational interface to my drafts.
+
+I also have some doubts about the whole thing.
+
+Initially, I wanted to blog manually, because I think writing with my own words makes for a better reader experience. Bot-written text — sorry bro — tends to become polished, impersonal, and a bit too smooth. It can sound correct while losing the rough edges that make a post feel like someone actually thought it through.
+
+But I also do not manage to post regularly, and I do not manage to finish enough of what I start. So this is the compromise I am trying.
+
+It is not literature. The point is not to protect some sacred artistic process. But it could still go wrong in a very LLM way: too wordy, too polished, too eager to explain everything, not enough me.
 
 Still, it feels promising for one reason: it targets the actual failure mode.
 
