@@ -1,0 +1,5 @@
+name: blog-writer-commands
+version: "0.1.0"
+description: "Profile-local Telegram slash commands for the Hugo blog writer bot."
+author: "Hermes Agent"
+kind: standalone

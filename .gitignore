@@ -1,1 +1,10 @@
 public
+
+# Agent/runtime artifacts
+agent/**/__pycache__/
+agent/**/*.pyc
+agent/**/.env
+agent/**/auth.json
+agent/**/state.db*
+agent/**/scheduler/
+agent/**/logs/
