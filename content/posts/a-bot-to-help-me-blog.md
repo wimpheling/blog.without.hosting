@@ -1,7 +1,7 @@
 ---
 title: "A Bot to Help Me Blog"
 date: 2026-06-03T10:04:39+00:00
-draft: true
+draft: false
 toc: true
 description: "I built a small Telegram-connected Hermes bot to act as a ghostwriter/editor for my static blog, and maybe unblock my writing."
 ---
