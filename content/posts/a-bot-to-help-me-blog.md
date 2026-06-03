@@ -53,9 +53,15 @@ What I want is more specific:
 - ask one useful question instead of giving me a huge writing framework;
 - occasionally nudge me when I am stuck.
 
-The important part is that the bot has access to the actual blog repository. It can inspect the existing drafts, see what state they are in, edit them, and commit changes.
+The nudges are probably the most important part of the experiment.
 
-That makes the interaction feel different from pasting text into a chatbot. The assistant is not outside the writing environment. It is sitting directly next to the files.
+The point is not to have a bot randomly tell me to be productive. That would be annoying and I would mute it after three days. The point is to prevent the blog from disappearing from my attention completely.
+
+A few times a day, the bot can look at the current drafts and send me a small, contextual message: this draft exists, this one has a good intro but no conclusion, this idea could become a short post, this paragraph is already almost usable. Ideally, the nudge should make the next step feel smaller.
+
+Something like: "you already have the core claim here, want to turn it into the intro?" Not: "please write 500 words today."
+
+That is the stimulation I am looking for. Not pressure. Just enough external memory and editorial presence to keep the writing loop alive.
 
 ## Why Telegram?
 
