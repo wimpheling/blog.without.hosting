@@ -55,13 +55,11 @@ What I want is more specific:
 
 The nudges are probably the most important part of the experiment.
 
-The point is not to have a bot randomly tell me to be productive. That would be annoying and I would mute it after three days. The point is to prevent the blog from disappearing from my attention completely.
+A few times a day, the bot can look at the current drafts and bring one of them back into the conversation. Not as a dry reminder, but as a fluent continuation of the subject matter: this draft has a good intro but no conclusion, this idea could become a short post, this paragraph is already almost usable, this claim deserves a sharper example.
 
-A few times a day, the bot can look at the current drafts and send me a small, contextual message: this draft exists, this one has a good intro but no conclusion, this idea could become a short post, this paragraph is already almost usable. Ideally, the nudge should make the next step feel smaller.
+Ideally, it should feel less like a notification and more like an editor casually reopening the thread: "you already have the core claim here, want to turn it into the intro?" or "the interesting bit in this draft is not the tool, it is the writing loop around it."
 
-Something like: "you already have the core claim here, want to turn it into the intro?" Not: "please write 500 words today."
-
-That is the stimulation I am looking for. Not pressure. Just enough external memory and editorial presence to keep the writing loop alive.
+That is the stimulation I am looking for. Enough external memory and editorial presence to keep the blog from disappearing from my attention completely, while still keeping the interaction conversational.
 
 ## Why Telegram?
 
