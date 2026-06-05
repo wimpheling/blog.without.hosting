@@ -11,22 +11,20 @@ externalLink: ""
 series: []
 ---
 
-Just some thoughts by ChatGPT :D
+A Decentralized Autonomous Intelligence needs a unit of account. Three years into the open-weight era, the choice between a volatile native token and a stablecoin rail is no longer academic.
 
-The tokenomics of a DAI (Decentralized Autonomous Intelligence) system involves the design and management of its native cryptocurrency, which plays a crucial role in facilitating transactions, incentivizing participation, and maintaining the value of the currency within the ecosystem. Here's an elaboration on the key aspects of DAI tokenomics:
+## Issuance
 
- - Currency issuance: The DAI system mints its native cryptocurrency to reward participants and facilitate transactions. The issuance mechanism can be designed to manage the supply of the currency, for example, through a fixed supply cap, halving events, or inflationary/deflationary models.
+The DAI mints a native token to reward miners, developers, and data providers. Supply can be fixed-capped, halving-style, or inflation-targeted. Most DAI proposals drift toward inflation — they need continuous rewards to attract compute, and a hard cap forces them to compete on fees alone.
 
- - Incentives and rewards: The DAI currency is used to incentivize various stakeholders in the ecosystem. Miners receive rewards for providing computing power, developers are paid for creating new algorithms or improving the AI model, and data providers are compensated for offering datasets. These incentives ensure active participation and contributions from all parties.
+## Incentives
 
- - Currency utility: The native currency serves as the medium of exchange within the DAI ecosystem. Users must acquire and spend the currency to access the AI model's services. This demand for the currency helps maintain its value and drives its adoption as a means of exchange.
+The token has to do real work: pay for inference, stake against model outputs, reward dataset curators, vote on protocol upgrades. A speculative asset propped up by emissions is a memecoin with extra steps.
 
- - Value creation and appreciation: The value of the DAI currency is directly linked to the demand for the AI model's services. As the AI model improves its capabilities and offers more valuable services, demand for the currency increases, potentially leading to price appreciation. This creates an incentive for investors to hold the currency and support the ecosystem.
+## The 2026 take: stablecoin rails win
 
- - Governance and decision-making: The native currency can also play a role in the governance of the DAI system. For example, token holders may have voting rights on key decisions, such as protocol updates, improvement proposals, or resource allocation. This ensures that stakeholders have a say in the system's development and aligns their interests with the overall success of the DAI.
+AI agents can't open bank accounts, can't hold USD, can't run ACH. The native DAI token is volatile, pegged to nothing, and mostly traded by humans. Stablecoins — USDC, USDT, the new yield-bearing variants — are the actual machine-native money rail: programmable, settling in seconds, with the deepest liquidity in crypto.
 
- - External exchange and liquidity: To enable users to acquire and utilize the native currency, it must be exchangeable with other cryptocurrencies or fiat currencies. This requires the establishment of liquid markets on exchanges and trading platforms, which also helps establish the currency's external value.
+A DAI that pays contributors in a volatile native token is asking them to take on an asset they don't want. A DAI that pays in USDC and settles a small fee in its own governance token gets both: predictable compensation, real upside for long-term holders.
 
- - Stability and security: The DAI tokenomics must be designed to ensure stability and security, preventing any single party from dominating the ecosystem or manipulating the currency's value. This may involve mechanisms such as decentralization, consensus algorithms, and governance models that protect against attacks and market manipulation.
-
-In summary, the tokenomics of a DAI system are essential for creating a sustainable and valuable platform for AI research and development. By carefully designing the issuance, incentives, utility, and governance aspects of the native currency, the DAI system can maintain a healthy balance of supply and demand while fostering active participation from various stakeholders in the ecosystem.
+This is what 2023 got wrong. Issuance matters. Incentives matter. But the unit of account matters more, and a stablecoin-by-default design is the only one that survives contact with agents that actually need to transact.
