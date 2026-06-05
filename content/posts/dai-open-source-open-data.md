@@ -39,10 +39,12 @@ Despite the advantages of open source and open data, privacy concerns pose signi
  - *Encryption*: Secure computation methods, like homomorphic encryption, enable AI models to process encrypted data without revealing its content. However, these methods can introduce computational overhead and complexity.
  - *Access Control*: Implementing strict access control mechanisms and authentication protocols can help ensure that only authorized parties can access sensitive data. However, this may limit the extent to which data can be shared openly.
 
-## Conclusion: Striking a Balance for DAIs
+## Conclusion: open weights, private data
 
-In weighing the pros and cons of open source and proprietary DAIs, it becomes clear that striking a balance between the two approaches is key. Open source and open data can fuel collaboration, transparency, and innovation, while proprietary elements can protect intellectual property and ensure quality control.
+I hedged in 2023. Three years of open-weight models have made the call obvious: **open the model, close the data**.
 
-To preserve privacy in an open environment, DAIs should employ a combination of privacy-preserving techniques like data anonymization, encryption, and access control. However, it's crucial to acknowledge that these techniques come with limitations and trade-offs.
+**Model weights should be open.** Llama, Mistral, Qwen, DeepSeek — open weights have done everything the open-source crowd hoped. They get audited, fine-tuned, run on commodity hardware, and broken out of single-vendor lock-in. Closing them back up doesn't make a model better, it just makes a vendor more extractive.
 
-Ultimately, a hybrid approach that leverages the strengths of both open-source and proprietary systems while addressing privacy concerns may offer the most promising path forward for DAIs, paving the way for a more innovative, accessible, and secure AI ecosystem.
+**Training data should stay private.** That's where the moat actually lives. Curated corpora, domain-specific datasets, customer data, hard-won evaluation harnesses — these are private for a reason, and "release the dataset too" was the 2023 mistake I won't repeat.
+
+Open weights trained on private data isn't a compromise. It's a division of labor: a model anyone can inspect, learning from material no one has to hand over.
