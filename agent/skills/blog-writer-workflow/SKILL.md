@@ -12,7 +12,7 @@ metadata:
 
 # Blog Writer Workflow
 
-Use this skill whenever the user asks to capture blog ideas, draft/edit Hugo posts, commit/push blog changes, publish/undraft an article, or send writing nudges.
+Use this skill whenever the user asks to capture blog ideas, draft/edit Hugo posts, commit/push blog changes, publish/unlist an article, or send writing nudges.
 
 ## Repository
 
@@ -24,11 +24,14 @@ Use this skill whenever the user asks to capture blog ideas, draft/edit Hugo pos
 
 ## Hard Rules
 
-1. Article draft/publish state lives in front matter, usually `draft: true/false`.
+1. Article draft/publish state lives in front matter via the `unlisted` field.
 2. Do not maintain a separate editorial database for article state.
 3. Content edits may be committed and pushed directly to the default branch.
-4. Never change `draft: true` to `draft: false`, remove `draft: true`, or otherwise publish/undraft without explicit user approval in the current conversation.
-5. Do not use PRs to manage draft status.
+4. **Draft = `unlisted: true`** (rendered at its URL, hidden from the posts list).
+5. **Published = no `unlisted` field, or `unlisted: false`** (listed normally).
+6. Never change `unlisted: true` to `unlisted: false` (or remove the field) — i.e., never unlist → publish — without explicit user validation in the current conversation.
+7. Do not use PRs to manage draft status.
+8. The Hugo site builds with `--buildDrafts` (or equivalent) so `draft: true` posts are NOT rendered. The `unlisted` convention replaces Hugo's built-in draft flag for content that should be reachable but hidden from listings.
 
 ## Writing Loop
 
@@ -46,9 +49,9 @@ Use this skill whenever the user asks to capture blog ideas, draft/edit Hugo pos
 6. For dated article clusters, propose an editorial consolidation path instead of mechanically polishing every draft. Identify what aged badly, what still holds, and a stronger modern framing.
 7. After editing files:
    - Run `git diff --check`.
-   - Review the diff for accidental undrafting.
+   - Review the diff for accidental publishing/unlisting.
    - Commit and push.
-   - In the final reply, include a read link: GitHub file link for drafts; production blog URL for published posts.
+   - In the final reply, include a read link (production blog URL).
 
 ## Commit/Push Helper
 
@@ -58,10 +61,10 @@ Use the helper script after edits:
 /home/ubuntu/.hermes/profiles/blog-writer/scripts/blog_commit_push.py "draft: update article title"
 ```
 
-If the change intentionally undrafts/publishes after explicit user approval:
+If the change intentionally unlists → publishes after explicit user approval:
 
 ```bash
-ALLOW_UNDRAFT=1 /home/ubuntu/.hermes/profiles/blog-writer/scripts/blog_commit_push.py "publish: article title"
+ALLOW_PUBLISH=1 /home/ubuntu/.hermes/profiles/blog-writer/scripts/blog_commit_push.py "publish: article title"
 ```
 
 If push fails, GitHub PAT is probably missing. Ask the user for a PAT and run:
@@ -103,7 +106,7 @@ Nudges should be:
 - based on an active draft or captured idea
 - framed as an easy next move
 - feel like a fluent conversation about the subject matter, not a dry reminder
-- include a read link when pointing to a post: GitHub file link for drafts; production blog URL for published posts
+- include a read link when pointing to a post (production blog URL)
 
 Good:
 - "Your LLM island idea has a strong core: generated code as a scoped interactive island inside deterministic structure. Want to turn that into the intro?"

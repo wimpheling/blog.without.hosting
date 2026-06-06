@@ -5,7 +5,7 @@ title: "Embracing Forking in DAIs"
 description: ""
 slug: ""
 authors: []
-tags: []
+tags: ["dai"]
 categories: []
 externalLink: ""
 series: []

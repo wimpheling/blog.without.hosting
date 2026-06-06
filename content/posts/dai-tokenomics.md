@@ -5,7 +5,7 @@ title: "DAI tokenomics"
 description: ""
 slug: ""
 authors: []
-tags: []
+tags: ["dai"]
 categories: []
 externalLink: ""
 series: []

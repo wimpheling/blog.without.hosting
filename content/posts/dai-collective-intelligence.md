@@ -5,7 +5,7 @@ title: "Unleashing Collective Intelligence: When DAIs Supercharge the DAO Revolu
 description: ""
 slug: ""
 authors: []
-tags: []
+tags: ["dai"]
 categories: []
 externalLink: ""
 series: []

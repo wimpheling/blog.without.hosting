@@ -5,7 +5,7 @@ title: "Open Source and Open Data: The Path Forward for DAIs?"
 description: ""
 slug: ""
 authors: []
-tags: []
+tags: ["dai"]
 categories: []
 externalLink: ""
 series: []

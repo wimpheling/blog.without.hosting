@@ -6,41 +6,9 @@ import os
 import re
 import subprocess
 from pathlib import Path
-from urllib.parse import quote
 
 REPO_PATH = Path("/home/ubuntu/.hermes/profiles/blog-writer/repo/blog.without.hosting")
 POSTS_DIR = REPO_PATH / "content" / "posts"
-
-
-def _run_git(args: list[str]) -> str:
-    return subprocess.check_output(
-        ["git", *args],
-        cwd=str(REPO_PATH),
-        text=True,
-        stderr=subprocess.DEVNULL,
-        timeout=5,
-    ).strip()
-
-
-def _github_base_url() -> str:
-    try:
-        remote = _run_git(["remote", "get-url", "origin"])
-    except Exception:
-        remote = "https://github.com/wimpheling/blog.without.hosting"
-    remote = remote.strip()
-    if remote.startswith("git@github.com:"):
-        repo = remote[len("git@github.com:"):].removesuffix(".git")
-        return f"https://github.com/{repo}"
-    if remote.startswith("https://github.com/"):
-        return remote.removesuffix(".git")
-    return "https://github.com/wimpheling/blog.without.hosting"
-
-
-def _branch() -> str:
-    try:
-        return _run_git(["branch", "--show-current"]) or "master"
-    except Exception:
-        return "master"
 
 
 def _extract_front_matter(text: str) -> dict[str, str]:
@@ -87,13 +55,6 @@ def _title_from_file(path: Path, fm: dict[str, str]) -> str:
     return path.stem.replace("-", " ").replace("_", " ").strip().title()
 
 
-def _github_file_url(path: Path) -> str:
-    rel = path.relative_to(REPO_PATH).as_posix()
-    # Quote path segments but keep slashes readable.
-    quoted_rel = "/".join(quote(part) for part in rel.split("/"))
-    return f"{_github_base_url()}/blob/{quote(_branch())}/{quoted_rel}"
-
-
 def list_drafts() -> str:
     if not POSTS_DIR.exists():
         return f"Drafts folder not found: `{POSTS_DIR}`"
@@ -105,8 +66,8 @@ def list_drafts() -> str:
         except Exception:
             continue
         fm = _extract_front_matter(text)
-        if _is_true(fm.get("draft")):
-            drafts.append((_title_from_file(path, fm), _github_file_url(path)))
+        if _is_true(fm.get("unlisted")):
+            drafts.append((_title_from_file(path, fm), f"https://blog.without.hosting/posts/{path.stem}/"))
 
     if not drafts:
         return "No draft articles found."
@@ -150,7 +111,7 @@ def register(ctx) -> None:
     ctx.register_command(
         "drafts",
         handler=_handle_drafts,
-        description="List current draft articles with GitHub links.",
+        description="List current draft articles with links.",
     )
     ctx.register_command(
         "nudge",

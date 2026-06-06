@@ -162,31 +162,10 @@ def _is_true(value: str | None) -> bool:
 
 def _run_git(args: list[str]) -> str:
     return subprocess.check_output(["git", *args], cwd=str(REPO), text=True, stderr=subprocess.DEVNULL, timeout=5).strip()
-
-
-def _github_base_url() -> str:
-    try:
-        remote = _run_git(["remote", "get-url", "origin"])
-    except Exception:
-        remote = "https://github.com/wimpheling/blog.without.hosting"
-    if remote.startswith("git@github.com:"):
-        return f"https://github.com/{remote[len('git@github.com:'):].removesuffix('.git')}"
-    if remote.startswith("https://github.com/"):
-        return remote.removesuffix(".git")
-    return "https://github.com/wimpheling/blog.without.hosting"
-
-
-def _branch() -> str:
-    try:
-        return _run_git(["branch", "--show-current"]) or "master"
-    except Exception:
-        return "master"
-
-
 def _github_file_url(path: Path) -> str:
     rel = path.relative_to(REPO).as_posix()
     quoted_rel = "/".join(quote(part) for part in rel.split("/"))
-    return f"{_github_base_url()}/blob/{quote(_branch())}/{quoted_rel}"
+    return f"https://github.com/wimpheling/blog.without.hosting/blob/master/{quoted_rel}"
 
 
 def _title(path: Path, fm: dict[str, str]) -> str:
@@ -203,13 +182,13 @@ def collect_candidates() -> list[dict]:
             except Exception:
                 continue
             fm = _extract_front_matter(text)
-            draft = _is_true(fm.get("draft"))
+            unlisted = _is_true(fm.get("unlisted"))
             candidates.append({
                 "kind": "post",
                 "id": path.relative_to(REPO).as_posix(),
                 "title": _title(path, fm),
-                "draft": draft,
-                "url": _github_file_url(path) if draft else f"https://blog.without.hosting/posts/{path.stem}/",
+                "unlisted": unlisted,
+                "url": f"https://blog.without.hosting/posts/{path.stem}/",
                 "mtime": path.stat().st_mtime,
                 "excerpt": text[:900].replace("\n", " "),
             })
@@ -218,7 +197,7 @@ def collect_candidates() -> list[dict]:
             for idea in json.loads(IDEAS.read_text())[-8:]:
                 txt = str(idea.get("text") or "").strip()
                 if txt:
-                    candidates.append({"kind": "idea", "id": f"idea:{idea.get('id')}", "title": txt[:80], "draft": True, "url": None, "mtime": 0, "excerpt": txt})
+                    candidates.append({"kind": "idea", "id": f"idea:{idea.get('id')}", "title": txt[:80], "unlisted": True, "url": None, "mtime": 0, "excerpt": txt})
         except Exception:
             pass
     return candidates
@@ -230,8 +209,8 @@ def select_candidate(candidates: list[dict], state: dict) -> dict | None:
     recent_posts = [x.get("post") for x in state.get("recent_nudges", [])[-5:]]
     fresh = [c for c in candidates if c["id"] not in recent_posts]
     pool = fresh or candidates
-    drafts = [c for c in pool if c.get("draft")]
-    pool = drafts or pool
+    unlisted = [c for c in pool if c.get("unlisted")]
+    pool = unlisted or pool
     return sorted(pool, key=lambda c: c.get("mtime", 0), reverse=True)[0]
 
 
@@ -242,7 +221,7 @@ def build_context(candidate: dict | None, state: dict) -> str:
     candidates = collect_candidates()[:8]
     if candidates:
         parts.append("Other recent drafts/posts/ideas:\n" + "\n".join(
-            f"- {c['title']} ({c['id']}) draft={c.get('draft')} link={c.get('url') or 'none'}" for c in candidates
+            f"- {c['title']} ({c['id']}) unlisted={c.get('unlisted')} link={c.get('url') or 'none'}" for c in candidates
         ))
     recent = state.get("recent_nudges", [])[-5:]
     if recent:
