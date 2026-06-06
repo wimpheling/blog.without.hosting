@@ -12,31 +12,47 @@ There is no context engineering.
 
 ## Bateson said it first
 
-Gregory Bateson wrote about context, and the short version is: everything is always context. There is no input that is not context. There is no "outside" of context for an LLM. So "context engineering" is, strictly speaking, a tautology. We are engineering the input to a transformer, and we have always been doing that, and we already have a name for it. The name is prompting.
+Gregory Bateson saw this structure — not about LLMs, but about mammals at play. In a 1955 essay called *A Theory of Play and Fantasy*, he watches two young animals roughhousing.
+
+They nip each other. The nip looks like a bite, sounds like a bite, resembles a bite in every observable way. But it is not a bite. The other animal does not flinch, flee, or retaliate. They keep playing.
+
+Why? Because both animals are communicating on two levels simultaneously. One level: the action. The other level: a message *about* the action. Bateson called this **metacommunication**:
+
+> "The other set of levels of abstraction we will call metacommunicative (e.g., 'My telling you where to find the cat was friendly,' or 'This is play'). In these, the subject of discourse is the relationship between the speakers."
+
+The metacommunicative message — "this is play" — tells the receiver how to interpret the action. The same gesture, without that frame, would be aggression. With the frame, it is play.
+
+And here is the line that matters:
+
+> "The playful nip denotes the bite, but it does not denote what would be denoted by the bite."
+
+The nip carries two meanings simultaneously: the denotative content (a bite-like action) and the metacommunicative frame (this is not a real bite). The frame is not separate from the action. The frame *is* the action, at a higher logical type. There is no "bite" without "this is play" layered on top. There is no content without context. They are the same emission.
+
+This is exactly what happens in an LLM prompt. Every token you put in the window carries information at multiple levels: the denotative content (the instruction, the user question, the fact) and the metacommunicative frame (system prompt, role assignment, preceding conversation, retrieved context, tool outputs). From the model's seat, these are all just tokens in a sequence. The boundary between "prompt" and "context" is editorial. The transformer does not see a system prompt versus a user message versus a RAG chunk. It sees a sequence of tokens and predicts the next one.
+
+## The paradox
+
+There is a contradiction sitting in the open. I said "there is no context engineering," then spent the last section arguing that everything is context. If everything is context, then you are *always already* engineering context. The term is not false. It is not even misleading.
+
+It is empty.
+
+"Context engineering" claims the discovery of something that has always been true of every communication since the first mammal nipped another and the nip was understood as play. Every message carries its own context. Every frame is a message at a higher logical type. There is no "outside" the frame. There is no input that is not already contextualized by every other input in the window. The term sounds like a new discipline but describes a structural constant. It is a tautology dressed as innovation.
+
+That is the real problem with the label. Not that it is wrong — but that it signals novelty where none exists, and in doing so, reveals how young the field still is.
 
 ## "Noyer le poisson"
 
-So why the new label? My read: it is *noyer le poisson* — muddying the waters. The term lets a young discipline dress up an old practice in fresh vocabulary. It signals novelty without actually being novel. And it reflects the level of immaturity of the field: we are still inventing job titles for things we have been doing for three years.
+So why keep using the label? My read: it is *noyer le poisson* — muddying the waters. The term lets a young discipline dress up an old practice in fresh vocabulary. It signals novelty without actually being novel. And it reflects the level of immaturity of the field: we are still inventing job titles for things we have been doing for three years.
 
 The proof is in the speakers. When someone says "context engineering" at a conference, ask them what part of their work was not already prompt engineering in 2023. The honest answer, almost always, is "the retrieval pipeline" or "the memory layer" or "the tool router." Those are real engineering concerns. They are not new. And they are not "context" in some special sense — they are just more input, assembled upstream of the same old next-token prediction.
 
 ## The reframe: we are not engineering, we are harnessing
 
-Here is the better word: **harnessing**.
-
-The metaphor matters. "Engineering" implies a stable material you are shaping — steel, code, concrete. "Harnessing" implies a powerful, partially understood force you are directing — wind, water, a river. LLMs are the second kind. The raw capability is genuinely novel, and the awe is real, especially now, in the first flush of agentic systems and million-token windows.
-
-But the goal is not to stay in awe. The goal is to channel that energy toward specific outcomes. We want to control the LLM, not stay in awe of its raw power — even though the awe is understandable, especially with the novelty factor.
+**[USER: write the harnessing section here — this is the load-bearing reframe of the post. The metaphor matters. Engineering implies a stable material you shape. Harnessing implies a powerful, partially understood force you direct. LLMs are the second kind.]**
 
 ## Three harnesses, one job
 
-Different goals, different harnesses:
-
-- **The control-freak CEO or CTO** wants predictable outputs. Deterministic pipelines, structured outputs, eval suites, regression tests. A tight harness with short reins.
-- **The artist** wants generative output. Loose reins, higher temperature, fewer guardrails, room for surprise. A different harness, but still a harness.
-- **The consciousness-curious** — and yes, this is partly a kink — wants the model to feel like *something*. That is also a harness, just a stranger one. You are still steering; you have just chosen a stranger destination.
-
-The harness metaphor does what "context engineering" cannot: it admits the LLM is doing something we do not fully understand, and it frames the human work as direction-setting rather than fabrication. Engineering is fabrication. Harnessing is steering. We are doing the second.
+**[USER: write the spectrum here — CEO/CTO (predictable) → artist (generative) → consciousness-curious (different destination, same harness).]**
 
 ## So what should we call it?
 
