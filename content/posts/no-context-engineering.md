@@ -1,7 +1,7 @@
 ---
 title: "There Is No Context Engineering"
 date: 2026-06-06T10:00:00+00:00
-draft: true
+unlisted: true
 toc: true
 description: "A contrarian take on the term 'context engineering': it is a tautology, a sign of discipline immaturity, and a misleading frame. The right metaphor is not engineering — it is harnessing."
 ---
