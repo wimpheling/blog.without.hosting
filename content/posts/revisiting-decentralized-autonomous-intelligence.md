@@ -1,7 +1,7 @@
 ---
 title: "Revisiting Decentralized Autonomous Intelligence"
 date: 2026-06-03T01:19:26+00:00
-draft: true
+unlisted: true
 toc: true
 description: "A revision of my 2023 DAI idea: what aged badly, what still matters, and what stack could make AI agents economically real."
 ---

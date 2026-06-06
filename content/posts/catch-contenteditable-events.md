@@ -1,7 +1,7 @@
 ---
 title: "A guide to contenteditable sanitization"
 date: 2020-12-25T21:10:40+02:00
-draft: true
+unlisted: true
 ---
 
 I've been recently trying to create a custom contenteditable editor, that should output fine-grained data. That means you have to prevent the user from entering any unwanted content inside your element. If you start working on this, you will encounter two types of blog posts :

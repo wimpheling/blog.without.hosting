@@ -1,5 +1,5 @@
 --- 
-draft: true
+unlisted: true
 date: 2023-04-12T00:15:59+01:00
 title: "Unleashing Collective Intelligence: When DAIs Supercharge the DAO Revolution"
 description: ""
