@@ -46,17 +46,9 @@ When the commit script sees an `edit:` message, it attaches a JSON note:
 
 The commit stays the same. The note is separate. The metadata stops trying to contain the thing it is about.
 
-We also distinguish authors explicitly in the commit message:
-
-```bash
-python3 ~/.hermes/profiles/blog-writer/scripts/blog_commit_push.py "edit[hermes]: tighten intro"
-```
-
-This matters because "hermes" and "bully" are different entities. The reader does not need to care about that, but I want the system to preserve the boundary.
-
 ## The build bridge
 
-Hugo does not read git notes. It should not have to. Before the build, a small script walks the commit history, collects notes attached to commits that touched posts, and writes temporary JSON files under `data/edits/`:
+We need to plug git notes into the Hugo build. Before the build, a small script walks the commit history, collects notes attached to commits that touched posts, and writes temporary JSON files under `data/edits/`:
 
 ```text
 data/edits/x-ai-quote-fabrication.json
