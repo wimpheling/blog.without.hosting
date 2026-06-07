@@ -58,9 +58,9 @@ Those files are gitignored. They are build artifacts, not source. Then a Hugo pa
 
 The flow:
 
-→ [View diagram on Excalidraw](https://excalidraw.com/#json=UdQbCCmG9u91fhNBmvtBy,lXUxhvvLLiBXz6WiWVCp8g)
+![Edit → Annotation Pipeline](/images/edit-pipeline-flow.svg)
 
-(click to open interactively)
+That is the whole feature. It is not complicated.
 
 ## Why this matters for the ghostwriter problem
 
