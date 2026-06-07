@@ -76,5 +76,3 @@ The rendered page shows the reader a small public trace.
 None of these layers absorb the job of the other. The front matter does not become a changelog. The commit message does not become a CMS field. The build script does not become a database.
 
 I think this is the right shape for a blog that has a bot writing for it. If the source of truth spreads across too many layers — if the article front matter, a JSON file, a CMS admin panel, and a build step all have opinions about what happened — then you end up with a system that is hard to reason about. You cannot trust the file anymore.
-
-The ghostwriter should be visible but not magical. Git notes keep the magic out of the article.
