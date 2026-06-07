@@ -143,4 +143,31 @@ The nice version: find a great declarative React form system and wrap it.
 
 The brutal version: implement the missing layer ourselves.
 
+## Current Backbone form baseline
+
+The repo already has a small form vocabulary, but not a full declarative form system.
+
+Today the design-system layer exposes:
+
+- `Form`
+- `FormField`
+- `TextInput`
+- `Button`
+- `Notice`
+- layout primitives like `Stack` and `Inline`
+
+The hello-world page uses those primitives directly. The route adapter wires Zustand state and ConnectRPC actions into page props. The page component receives plain static props plus dynamic callbacks like `onNameChanged` and `onSubmitted`.
+
+That is a good baseline, but it is not yet "forms as Backspine structure." The missing layer is a declarative description that can connect:
+
+- field names and labels;
+- validation rules;
+- payload shape;
+- RPC/action target;
+- pending/error/success states;
+- generated story states;
+- e2e steps.
+
+So the question is not "do we need form components?" The repo already has them. The question is whether Backspine should promote forms into a first-class spec that generates the boring wiring around those components.
+
 [USER: expand — actually evaluate the candidate libraries. Which one is most compatible with Backspine: React Hook Form + Zod, TanStack Form, Uniforms, JSON Forms, RJSF, Conform, or a custom spec layer over a headless library?]

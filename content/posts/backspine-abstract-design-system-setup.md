@@ -130,4 +130,34 @@ But: "Here is a small abstract language. Use it. When the product teaches us a n
 
 That is where Backspine gets interesting.
 
+## What the current design system actually is
+
+In the repo, the design system is already contract-first.
+
+There are three packages:
+
+- `@backbone/design-system-contract`: type-only component contracts (`ButtonProps`, `ButtonComponent`, etc.);
+- `@backbone/design-system-basic`: the current concrete React implementation, with `styles.css` and colocated Ladle stories;
+- `@backbone/design-system`: the facade app code imports from, re-exporting implementation and contract types.
+
+Current vocabulary:
+
+- `Button`
+- `EmptyState`
+- `Form`
+- `FormField`
+- `Heading`
+- `Inline`
+- `Layout`
+- `Loader`
+- `Navigation`
+- `Notice`
+- `Stack`
+- `Text`
+- `TextInput`
+
+The important part is not the component list. The important part is that the template has an architecture checker and an oxlint plugin around it. New design-system components need matching contract and implementation files, barrel exports, and colocated stories. App code is not supposed to casually import MUI, Chakra, Mantine, Radix, or write raw `<div>` soup.
+
+That is exactly the agent-vocabulary point. The system is not saying "make the UI pretty." It is saying: speak through these nouns.
+
 [USER: expand — add the concrete Navigation example from the actual project. What did the agent invent? What vocabulary emerged? What should be stabilized into the design system versus left as local implementation?]

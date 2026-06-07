@@ -110,4 +110,17 @@ The computer should not ask you to read its monologue.
 
 It should show you the thing you are making.
 
+## Backbone's actual focus surface
+
+The current repo already rejects the "watch the agent type" interface. The interesting surfaces are structured:
+
+- pages in `template/client/src/pages/`;
+- design-system vocabulary in `template/client/packages/design-system-*`;
+- state/action wiring in route adapters and Zustand stores;
+- backend data/RPC modules in `template/server/src/`;
+- SQL migrations;
+- Gherkin features and Playwright tests.
+
+That is the vibe I want: not chatbot transcript as product UI, but a small set of product structures the agent can modify. The human should review routes, payloads, pages, tests, and design-system vocabulary — not the assistant's theatrical monologue.
+
 [USER: expand — make this more concrete as a Backspine UI proposal. What are the exact panels? What does a feature change screen look like? How do we separate useful agent trace from chatbot slop without hiding evidence when something breaks?]

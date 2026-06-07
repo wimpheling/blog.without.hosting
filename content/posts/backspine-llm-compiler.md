@@ -9,7 +9,17 @@ description: "People compare LLMs to compilers. If that's true, we should recomp
 
 People have often compared LLMs to compilers. The analogy is imperfect but instructive: an LLM transforms an input (prompt, spec, intent) into an output (code), just as a compiler transforms source code into machine code.
 
-The non-determinism angle is where it gets interesting — unlike a traditional compiler, the same input does not always produce the same output. Some see this as a weakness. Others, more interestingly, see it as a feature of a different kind of compilation. [USER: find and cite the specific X thread about non-deterministic compilers]
+The non-determinism angle is where it gets interesting — unlike a traditional compiler, the same input does not always produce the same output. Some see this as a weakness. Others, more interestingly, see it as a feature of a different kind of compilation.
+
+## Backbone makes the compiler analogy less abstract
+
+The Backbone template gives this analogy a concrete target.
+
+If the spec changes, the generated/edited artifacts are not just "code" in the abstract. They are page slices, design-system contracts, route adapters, state stores, RPC calls, migrations, stories, and e2e tests.
+
+That makes the compiler metaphor more useful and less stupid. We are not asking the model to compile a paragraph into an app-shaped blob. We are asking it to update a structured program with recognizable compilation units.
+
+[USER: find and cite the specific X thread about non-deterministic compilers]
 
 But whether the analogy holds philosophically, it points to a practical observation:
 

@@ -50,4 +50,19 @@ This is selective recompilation. The LLM is the compiler. The islands are the co
 
 The practical constraint is dependency resolution: does island A depend on island B's implementation or just its interface? If the latter, B can be regenerated independently. If the former, both need recompilation. A well-designed island graph has strict interface boundaries — just like a well-designed software project.
 
+## What recompilation means in Backbone v1
+
+In the actual Backbone template, "recompile the app" should not mean asking an LLM to rewrite the entire repository from a chat transcript.
+
+The code already suggests smaller compilation targets:
+
+- a page component with typed static and dynamic props;
+- a route adapter that binds state to the page;
+- a Zustand store for client state and RPC calls;
+- a design-system contract and implementation boundary;
+- backend migrations and RPC modules;
+- Gherkin + Playwright behavior tests.
+
+So the realistic Backspine move is: fold corrections back into the feature spec, then regenerate or patch the bounded slice that owns that behavior. The island is the compilation unit. Tests, stories, lint rules, and contracts are the linker.
+
 [USER: expand — go find the X thread about LLM-as-compiler non-determinism for the reference. Also articulate: what breaks this model? When do constraints conflict and make regeneration oscillate? Is the island linker a human role or can it be automated?]

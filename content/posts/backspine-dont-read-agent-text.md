@@ -50,3 +50,20 @@ What that means:
 - **The UI should surface structural changes semantically.** You should see what changed at the architecture level, not the token level. And be able to zoom in on a particular implementation when you need to. ([draft: backspine structural changes semantic])
 
 Shameless self-promotion: I'm working on the answer. Backspine is that answer, or at least the attempt at it.
+
+## Backbone makes the artifact inspectable
+
+This is also why the existing Backbone template matters. It gives us better things to inspect than agent prose.
+
+Instead of reading a transcript, I can inspect:
+
+- the page component;
+- the route adapter;
+- the state store;
+- the design-system primitive used;
+- the story states;
+- the Gherkin feature;
+- the Playwright test;
+- the migration and RPC module.
+
+Those are real artifacts. They can be linted, rendered, tested, diffed, and committed. The assistant text cannot.
