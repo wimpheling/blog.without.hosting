@@ -1,6 +1,6 @@
 [build]
 publish = "public"
-command = "python3 scripts/build_edits.py && hugo --gc --minify --buildFuture"
+command = "git fetch origin refs/notes/commits:refs/notes/commits && python3 scripts/build_edits.py && hugo --gc --minify --buildFuture"
 
 [context.production.environment]
 HUGO_VERSION = "0.162.1"
@@ -8,20 +8,20 @@ HUGO_ENV = "production"
 HUGO_ENABLEGITINFO = "true"
 
 [context.split1]
-command = "python3 scripts/build_edits.py && hugo --gc --minify --enableGitInfo"
+command = "git fetch origin refs/notes/commits:refs/notes/commits && python3 scripts/build_edits.py && hugo --gc --minify --enableGitInfo"
 
 [context.split1.environment]
 HUGO_VERSION = "0.162.1"
 HUGO_ENV = "production"
 
 [context.deploy-preview]
-command = "python3 scripts/build_edits.py && hugo --gc --minify --buildFuture -b $DEPLOY_PRIME_URL"
+command = "git fetch origin refs/notes/commits:refs/notes/commits && python3 scripts/build_edits.py && hugo --gc --minify --buildFuture -b $DEPLOY_PRIME_URL"
 
 [context.deploy-preview.environment]
 HUGO_VERSION = "0.162.1"
 
 [context.branch-deploy]
-command = "python3 scripts/build_edits.py && hugo --gc --minify -b $DEPLOY_PRIME_URL"
+command = "git fetch origin refs/notes/commits:refs/notes/commits && python3 scripts/build_edits.py && hugo --gc --minify -b $DEPLOY_PRIME_URL"
 
 [context.branch-deploy.environment]
 HUGO_VERSION = "0.162.1"
