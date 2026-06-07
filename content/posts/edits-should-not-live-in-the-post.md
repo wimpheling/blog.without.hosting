@@ -1,5 +1,5 @@
 ---
-title: "Edits Should Not Live in the Post"
+title: "Write Fast, Publish Fast, Still Iterating"
 date: 2026-06-07T15:20:00+00:00
 unlisted: true
 tags: ["ghostwriter", "static sites", "git"]
