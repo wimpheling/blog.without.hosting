@@ -1,10 +1,12 @@
 backend:
-  name: github
-  repo: wimpheling/blog.without.hosting
+  name: git-gateway
   branch: master
-  site_domain: blog.without.hosting
-
-publish_mode: editorial_workflow
+  commit_messages:
+    create: "cms: create {{slug}}"
+    update: "cms: update {{slug}}"
+    delete: "cms: delete {{slug}}"
+    uploadMedia: "cms: upload {{path}}"
+    deleteMedia: "cms: delete {{path}}"
 
 media_folder: "static/images"
 public_folder: "/images"
