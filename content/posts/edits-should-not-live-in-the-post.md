@@ -4,16 +4,16 @@ date: 2026-06-07T15:20:00+00:00
 unlisted: true
 tags: ["ghostwriter", "static sites", "git"]
 toc: true
-description: "My blog has a ghostwriter bot. I needed to show its edits publicly without turning the front matter into a database. Git notes were the accidental right tool."
+description: "LLMs turn rambles into readable posts faster than the dev work finishes. You publish early, the article evolves — git notes track that cleanly."
 ---
 
-My blog has a ghostwriter. The bot writes drafts, tightens paragraphs, fixes typos, commits them. That's the whole deal: I ramble, it writes, I correct, it pushes.
+My blog has a ghostwriter. The bot writes drafts, tightens paragraphs, fixes typos, commits them. That works well.
 
-But now there's a reader-facing problem. When someone visits a post that has been edited by both of us, they should be able to see that something changed. Not a forensic audit. Just a small block at the bottom saying: this was edited, roughly when, by whom.
+It also creates an interesting constraint: because the LLM can turn a ramble into something readable in minutes, the post is often ready to publish long before the dev task it documents is actually finished. You want to publish early — the writing is there, readers can engage — but you are still iterating on the thing the post is about. The article will change as the work progresses.
 
-Simple, right?
+That means you need to let readers see the change history. Not a forensic audit. Just a small block at the bottom saying: this was edited, roughly when, by whom.
 
-Not if you care about source of truth parsimony.
+This is perfectly compatible with a static, git-based blog. Hugo does not need a database to track editorial history. Git already has the tools.
 
 ## The front matter trap
 
@@ -29,8 +29,6 @@ edits:
 This works for about five minutes. Then you remember that the commit hash is a hash of the commit that includes the file content. If the file content contains the commit hash, you have a circular dependency. You can work around it — placeholder, amend, second commit — but now the workflow is cursed.
 
 The real problem is not the circular hash though. The real problem is: you turned the article into a ledger. The front matter now has to be updated every time someone sneezes near the file. That means the ghostwriter has to maintain editorial state inside the same file it is editing. The bot becomes responsible for its own paper trail, inside the thing it is changing. There is no boundary.
-
-I do not want that.
 
 ## Git notes
 
