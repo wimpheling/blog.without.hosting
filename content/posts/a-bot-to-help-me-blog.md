@@ -3,99 +3,48 @@ title: "A Bot to Help Me Blog"
 date: 2026-06-03T10:04:39+00:00
 draft: false
 toc: true
-description: "I built a small Telegram-connected Hermes bot to act as a ghostwriter/editor for my static blog, and maybe unblock my writing."
+description: "I built a Telegram-connected bot that can draft and edit my blog posts but cannot publish them. Hugo draft state is enforced by the tool, not trusted to my discipline."
 tags: ["ghostwriter"]
 ---
 
-I have things to say, but I also have a very stupid problem: I am bad at finishing articles.
+I built a Telegram bot that can write and edit my blog posts but cannot publish them. Hugo `draft: true` is enforced by the tool, not trusted to my discipline.
 
-Not because I lack opinions. That part is fine. I have too many of them. The problem is more mundane: blank page syndrome, unfinished drafts, vague ideas that stay in my head, half-written posts that never become clean enough to publish.
+That constraint shapes everything else about the setup.
 
-I already had a small static developer blog with not much content on it. So I decided to do something slightly meta: I created a bot to help me blog.
+## The constraint
 
-This post is the first test of that setup.
+The bot reads and writes files in the Hugo repo directly. No separate editorial database — the Markdown files are the source of truth, the commit history is the edit log, and `draft: true` (or `unlisted: true`) is a hard gate.
 
-## The setup
+When the commit script sees a diff that would flip `draft: true` to `draft: false`, it refuses. There is an environment variable to override it — `ALLOW_PUBLISH=1` — but the bot cannot set that. Only I can, and only when I am sitting at a terminal reviewing the change.
 
-The idea is not very complicated. I made myself a dedicated blogging assistant using Hermes.
+This is not about trust. It is about making the failure mode impossible. An agent that can publish will eventually publish something it should not, not out of malice but because a prompt went sideways or a hallucination looked plausible. If the tool literally cannot do the thing, that class of bug does not exist.
 
-Hermes has this concept of profiles, which is basically a way to run a bot with its own memory, configuration, tools, and identity. So instead of using my general-purpose assistant, I created a new profile just for the blog.
+The rest of the architecture follows from this choice:
 
-Then I wired it to a new Telegram bot, so I can talk to it from my phone like I would message a human editor.
+- the bot has its own Hermes profile with blog-specific memory and tools;
+- a dedicated Telegram bot is the interface — I dm it from my phone;
+- the GitHub token is scoped to the one repo;
+- drafts sit in the repo as Markdown, visible at their URL but hidden from lists;
+- a cron job sends two or three nudges a day, re-surfacing dormant drafts in a conversational way.
 
-The blog itself stays boring, in the good way: it is still a Hugo static site stored in a GitHub repository. The bot does not maintain a separate editorial database. It edits the files in the repo directly. The repository remains the source of truth.
+None of these details is independently interesting. They are just the scaffolding required by the core constraint.
 
-The rough setup is:
+## Why Telegram
 
-- a dedicated Hermes profile for the blog assistant;
-- a dedicated Telegram bot connected to that profile;
-- a GitHub token scoped only to the blog repository;
-- a Hugo repo where posts live as Markdown files;
-- draft/publish state stored in the article front matter;
-- a small Telegram command, `/drafts`, to list current drafts;
-- a cron job that pings me two or three times a day about drafts in progress.
+My drafts rarely start as documents. They start as messages to a friend, a rant in a Discord group, a thought I type while walking. Telegram is low-friction and always available — no need to open an editor, name the file, decide on a structure before writing anything.
 
-There is also one important rule: the bot is allowed to write and edit drafts, but it is not allowed to publish them by itself.
+I can send the bot a messy thought and say: make this a draft.
 
-In Hugo terms, that means it must not flip `draft: true` to `draft: false` unless I explicitly validate it. This is the kind of small constraint that matters a lot. I want help writing, not an autonomous content farm accidentally publishing half-baked thoughts under my name.
+That is what happened here. I posted a French message in a Discord group explaining the bot, realized it was the seed of a blog post, copied it to the bot, and asked for an English draft. A strange loop: I built a bot to help me blog, then immediately used the explanation of the bot as the first thing for the bot to blog about.
 
-## What I want from the bot
+## Voice risk
 
-The role I gave it is somewhere between ghostwriter and editor.
+Bot-written text sounds correct and loses the rough edges that make a post feel like someone actually reasoned through it. That is a real risk. The compromise is that the bot does the restructuring and the grunt work, but the actual claims and the framing come from me. If the bot's voice dominates, the experiment failed.
 
-Not a productivity coach. I do not need generic motivational guilt. I do not want "remember to write today" messages or fake urgency.
+## What the experiment actually tests
 
-What I want is more specific:
+Not whether the bot can write. It obviously can, in the same way an LLM can write anything — passably, at length, with medium confidence. The question is whether reducing the friction from "I have a thought" to "there is a coherent draft in the repo" changes my actual output over months.
 
-- take my rambles and find the actual claim inside them;
-- turn messy notes into a possible outline;
-- preserve my voice instead of making everything sound like LinkedIn;
-- notice which drafts are close to becoming posts;
-- ask one useful question instead of giving me a huge writing framework;
-- occasionally nudge me when I am stuck.
+The failure mode it targets is not writer's block. It is the gap between having a thought and committing it to a file. If the bot can reliably close that gap — turn rambles into drafts, keep track of unfinished posts, ask the right small question — that might be enough.
 
-The nudges are probably the most important part of the experiment.
-
-A few times a day, the bot can look at the current drafts and bring one of them back into the conversation. Not as a dry reminder, but as a fluent continuation of the subject matter: this draft has a good intro but no conclusion, this idea could become a short post, this paragraph is already almost usable, this claim deserves a sharper example.
-
-Ideally, it should feel less like a notification and more like an editor casually reopening the thread: "you already have the core claim here, want to turn it into the intro?" or "the interesting bit in this draft is not the tool, it is the writing loop around it."
-
-That is the stimulation I am looking for. Enough external memory and editorial presence to keep the blog from disappearing from my attention completely, while still keeping the interaction conversational.
-
-## Why Telegram?
-
-Because my drafts usually do not start as careful documents.
-
-They start as short bursts. A message to a friend. A rant in a Discord group. A thought I type while walking. A quick observation that feels obvious in the moment but disappears if I do not capture it.
-
-Telegram is a good interface for that kind of input. Low friction. Always available. No need to open an editor, find the right file, name the post, and pretend I am already in Serious Writing Mode.
-
-I can just send the bot a messy thought and say: make this a draft.
-
-That is exactly what happened here. I posted a French message in a Discord group explaining the setup, then realized it was already the seed of a blog post. So I copied it to the bot and asked it to make an English draft.
-
-Which is a strange little loop: I built a bot to help me blog, then immediately used the explanation of the bot as the first thing for the bot to blog about.
-
-## Will it actually work?
-
-No idea yet.
-
-I set this up yesterday, so this is very much an experiment. Maybe it will unblock me. Maybe I will ignore the nudges after a week. Maybe the most useful part will not be the writing itself, but the fact that I now have a conversational interface to my drafts.
-
-I also have some doubts about the whole thing.
-
-Initially, I wanted to blog manually, because I think writing with my own words makes for a better reader experience. Bot-written text — sorry bro — tends to become polished, impersonal, and a bit too smooth. It can sound correct while losing the rough edges that make a post feel like someone actually thought it through.
-
-But I also do not manage to post regularly, and I do not manage to finish enough of what I start. So this is the compromise I am trying.
-
-It is not literature. The point is not to protect some sacred artistic process. But it could still go wrong in a very LLM way: too wordy, too polished, too eager to explain everything, not enough me.
-
-Still, it feels promising for one reason: it targets the actual failure mode.
-
-My problem is not that I cannot generate words. My problem is that the path from "I have a thought" to "there is a coherent draft in the repo" has too much friction.
-
-If the bot can reliably turn a ramble into a draft, keep track of unfinished posts, and occasionally ask the right small question, that might be enough.
-
-Not to automate writing.
-
-Just to make it easier to continue.
+Not to automate writing. Just to make it easier to continue.
