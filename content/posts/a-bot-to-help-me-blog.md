@@ -4,6 +4,7 @@ date: 2026-06-03T10:04:39+00:00
 draft: false
 toc: true
 description: "I built a small Telegram-connected Hermes bot to act as a ghostwriter/editor for my static blog, and maybe unblock my writing."
+tags: ["ghostwriter"]
 ---
 
 I have things to say, but I also have a very stupid problem: I am bad at finishing articles.
