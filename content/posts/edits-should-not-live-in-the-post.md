@@ -1,6 +1,6 @@
 ---
 title: "Edits Should Not Live in the Post"
-date: 2026-06-07T16:20:00+00:00
+date: 2026-06-07T15:20:00+00:00
 unlisted: true
 tags: ["ghostwriter", "static sites", "git"]
 toc: true
