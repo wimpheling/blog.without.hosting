@@ -1,0 +1,31 @@
+<section class="container taxonomy">
+  <h1 class="title">
+    <a class="title-link" href="{{ .Permalink | safeURL }}">
+      {{- if eq .Kind "term" -}}
+      {{- i18n .Data.Singular | title -}}
+      {{- print ": " -}}
+      {{- end -}}
+
+      {{- i18n (lower .Title) | default .Title | title -}}
+    </a>
+  </h1>
+  {{ .Content }}
+  <ul>
+    {{ $type := .Type }}
+    {{ range $key, $value := .Data.Terms.Alphabetical }}
+      {{ $name := .Name }}
+      {{ with $.Site.GetPage (printf "/%s/%s" $type $name) }}
+        {{ $visiblePages := where .Pages ".Params.unlisted" "!=" true }}
+        {{ $count := len $visiblePages }}
+        {{ if gt $count 0 }}
+          <li>
+            <span class="taxonomy-element">
+              <a href="{{ .Permalink }}">{{ .Name }}</a>
+              <sup>{{ $count }}</sup>
+            </span>
+          </li>
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  </ul>
+</section>
