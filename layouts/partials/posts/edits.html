@@ -7,7 +7,7 @@
     {{ range . }}
     <li class="post-edits-item">
       <span class="post-edits-meta">
-        <time class="post-edits-date" datetime="{{ .edited_at }}">{{ .edited_at }}</time>
+        <time class="post-edits-date" datetime="{{ .edited_at }}">{{ dateFormat "2 Jan 2006 15:04" .edited_at }}</time>
         <span class="post-edits-author">by {{ .author }}</span>
         <code class="post-edits-commit">{{ .commit }}</code>
       </span>
