@@ -58,11 +58,9 @@ Those files are gitignored. They are build artifacts, not source. Then a Hugo pa
 
 The flow:
 
-```text
-edit commit → git note → build_edits.py → data/edits/<slug>.json → Hugo partial
-```
+→ [View diagram on Excalidraw](https://excalidraw.com/#json=UdQbCCmG9u91fhNBmvtBy,lXUxhvvLLiBXz6WiWVCp8g)
 
-That is the whole feature. It is not complicated.
+(click to open interactively)
 
 ## Why this matters for the ghostwriter problem
 
