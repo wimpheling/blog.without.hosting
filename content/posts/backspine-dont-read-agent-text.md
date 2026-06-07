@@ -19,6 +19,20 @@ This is the same dynamic as the "thinking" token phenomenon. At first, we loved 
 
 But the full coding agent UI is noise of the same kind. A wall of streaming text about what the agent *intends* to do, while the actual code changes scroll past in the same feed, indistinguishable from the blabla.
 
+## The performative assistant
+
+The chatbot interface is not neutral. It is a scene.
+
+Just like the ["performative male"](https://knowyourmeme.com/memes/performative-male) became a recognizable aesthetic of staged sensitivity, the chatbot assistant is a staged version of what geek culture imagined a sci-fi assistant would be: endlessly helpful, emotionally available, slightly sycophantic, always ready to explain itself, always performing competence.
+
+It cosplays the childhood fantasy of the nice best helpful friend inside the machine.
+
+That fantasy is understandable. A lot of us grew up wanting this. The computer that talks back. The robot sidekick. The assistant who never gets tired, never judges, and always wants to help.
+
+But coding is where the fantasy becomes expensive. The performance of helpfulness competes with the actual work. The assistant narrates intention, reassurance, apology, plan, and fake humility — while the artifact remains the only thing that matters.
+
+The problem is not that the assistant has a personality. The problem is that the personality becomes the interface.
+
 ## The counter-argument
 
 "But there's too much code output. The AI's verbal explanation is the only usable presentation layer."
