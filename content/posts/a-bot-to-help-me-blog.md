@@ -9,25 +9,19 @@ tags: ["ghostwriter"]
 
 I built a Telegram bot that can write and edit my blog posts but cannot publish them. Hugo `draft: true` is enforced by the tool, not trusted to my discipline.
 
-That constraint shapes everything else about the setup.
-
-## The constraint
-
 The bot reads and writes files in the Hugo repo directly. No separate editorial database — the Markdown files are the source of truth, the commit history is the edit log, and `draft: true` (or `unlisted: true`) is a hard gate.
 
 When the commit script sees a diff that would flip `draft: true` to `draft: false`, it refuses. There is an environment variable to override it — `ALLOW_PUBLISH=1` — but the bot cannot set that. Only I can, and only when I am sitting at a terminal reviewing the change.
 
 This is not about trust. It is about making the failure mode impossible. An agent that can publish will eventually publish something it should not, not out of malice but because a prompt went sideways or a hallucination looked plausible. If the tool literally cannot do the thing, that class of bug does not exist.
 
-The rest of the architecture follows from this choice:
+The concrete setup:
 
 - the bot has its own Hermes profile with blog-specific memory and tools;
 - a dedicated Telegram bot is the interface — I dm it from my phone;
 - the GitHub token is scoped to the one repo;
 - drafts sit in the repo as Markdown, visible at their URL but hidden from lists;
 - a cron job sends two or three nudges a day, re-surfacing dormant drafts in a conversational way.
-
-None of these details is independently interesting. They are just the scaffolding required by the core constraint.
 
 ## Why Telegram
 
