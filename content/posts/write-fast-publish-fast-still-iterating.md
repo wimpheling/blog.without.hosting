@@ -1,7 +1,7 @@
 ---
 title: "Write Fast, Publish Fast, Still Iterating"
 date: 2026-06-07T15:20:00+00:00
-unlisted: true
+unlisted: false
 tags: ["ghostwriter", "static sites", "git"]
 toc: true
 description: "LLMs turn rambles into readable posts faster than the dev work finishes. You publish early, the article evolves — git notes track that cleanly."
