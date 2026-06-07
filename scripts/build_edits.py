@@ -32,7 +32,7 @@ def run(*args):
 
 
 def get_commits_for_file(rel_path):
-    r = run("git", "log", "--pretty=format:%H", "--", rel_path)
+    r = run("git", "log", "--follow", "--pretty=format:%H", "--", rel_path)
     if r.returncode != 0 or not r.stdout.strip():
         return []
     return r.stdout.strip().split("\n")
