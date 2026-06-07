@@ -7,7 +7,7 @@ toc: true
 description: "LLMs turn rambles into readable posts faster than the dev work finishes. You publish early, the article evolves — git notes track that cleanly."
 ---
 
-My blog has a ghostwriter. The bot writes drafts, tightens paragraphs, fixes typos, commits them. That works well.
+My blog [has a ghostwriter](https://blog.without.hosting/posts/a-bot-to-help-me-blog/). The bot writes drafts, tightens paragraphs, fixes typos, commits them. That works well.
 
 It also creates an interesting constraint: because the LLM can turn a ramble into something readable in minutes, the post is often ready to publish long before the dev task it documents is actually finished. You want to publish early — the writing is there, readers can engage — but you are still iterating on the thing the post is about. The article will change as the work progresses.
 
