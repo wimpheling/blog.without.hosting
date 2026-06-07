@@ -1,4 +1,5 @@
-{{ with .Params.edits }}
+{{ $slug := .File.BaseFileName }}
+{{ with index .Site.Data.edits $slug }}
 <aside class="post-edits">
   <h2 class="post-edits-heading">Edits</h2>
   <ol class="post-edits-list">

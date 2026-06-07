@@ -60,7 +60,7 @@ The bio cross-links to `@zscdao`, which is a separate X account. Pulling that pr
 
 Polymarket is a crypto prediction market. ZSC DAO is a community that builds tooling around it. So the source of the "Anthropic engineer" quote is *not* in the AI-lab orbit — it is in the **crypto prediction-market DAO** orbit, with an AI-tools side interest.
 
-The non-obvious part: prediction-market DAOs have a strong incentive to publish content that the AI Twitter audience finds credible, because they sell picks, signals, and tools to that audience. AI influencer X is a target market for them. A "Anthropic engineer says X" pull-quote travels far in that audience.
+The non-obvious part: prediction-market DAOs have a strong incentive to publish content that the AI Twitter audience finds credible, because they sell picks, signals, and tools to that audience. AI influencer X is a target market for them. An "Anthropic engineer says X" pull-quote travels far in that audience.
 
 I am not accusing anyone of anything. I am naming a structural fit: the people who would benefit most from a sharp AI quote going viral are the people whose day job is monetizing AI Twitter's attention. That is rody's orbit, and it is a *coincidence* of incentives, not necessarily a conspiracy. But the fit is real.
 
