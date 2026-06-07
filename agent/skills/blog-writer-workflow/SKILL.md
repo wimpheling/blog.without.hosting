@@ -55,11 +55,43 @@ Use this skill whenever the user asks to capture blog ideas, draft/edit Hugo pos
 
 ## Commit/Push Helper
 
-Use the helper script after edits:
+Use the helper script after blog edits. Do **not** use raw `git commit` for content edits: the helper is the path that enforces the publish guard and attaches git-note metadata for the public `Edits` log.
 
 ```bash
 /home/ubuntu/.hermes/profiles/blog-writer/scripts/blog_commit_push.py "draft: update article title"
 ```
+
+### Public edit log via git notes
+
+Rendered-post edits are tracked in **git notes**, not article front matter. This avoids the circular-hash bug where a post front matter entry tries to contain the commit hash of the commit that also contains that entry.
+
+Commit-message conventions:
+
+- `edit: <description>` — attach a git note; author defaults to `$HERMES_AUTHOR` or `bully`.
+- `edit[hermes]: <description>` — attach a git note with explicit author `hermes`.
+- `edit[bully]: <description>` — attach a git note with explicit author `bully`.
+- `draft:`, `chore:`, `publish:`, etc. — normal commit; no public edit note.
+
+Keep `edit:` descriptions short and reader-facing because they render on the post. Good examples:
+
+- `edit: fix typo "A Anthropic" → "An Anthropic"`
+- `edit[hermes]: tighten intro and source caveat`
+- `edit[bully]: add missing link to the X thread`
+
+Implementation notes:
+
+- Notes live in `refs/notes/commits`; pushing `HEAD` alone is not enough.
+- The helper script pushes both `HEAD` and `refs/notes/commits`.
+- Netlify runs `python3 scripts/build_edits.py && hugo --gc --minify --buildFuture`.
+- `scripts/build_edits.py` reads git notes and generates gitignored `data/edits/<slug>.json` files for Hugo.
+- `layouts/partials/posts/edits.html` renders `.Site.Data.edits` at the bottom of posts.
+- If the public `Edits` block disappears, check: commit pushed, notes ref pushed, build script ran in Netlify logs.
+
+Environment knobs:
+
+- `SKIP_PUSH=1` — commit locally without pushing.
+- `ALLOW_PUBLISH=1` — bypass publish guard only after explicit current-chat user approval.
+- `HERMES_AUTHOR=hermes` — override default author for plain `edit:` commits.
 
 If the change intentionally unlists → publishes after explicit user approval:
 
