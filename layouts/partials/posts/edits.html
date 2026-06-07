@@ -1,0 +1,17 @@
+{{ with .Params.edits }}
+<aside class="post-edits">
+  <h2 class="post-edits-heading">Edits</h2>
+  <ol class="post-edits-list">
+    {{ range . }}
+    <li class="post-edits-item">
+      <span class="post-edits-meta">
+        <time class="post-edits-date" datetime="{{ .edited_at }}">{{ .edited_at }}</time>
+        <span class="post-edits-author">by {{ .author }}</span>
+        <code class="post-edits-commit">{{ .commit }}</code>
+      </span>
+      <span class="post-edits-description">{{ .description }}</span>
+    </li>
+    {{ end }}
+  </ol>
+</aside>
+{{ end }}
