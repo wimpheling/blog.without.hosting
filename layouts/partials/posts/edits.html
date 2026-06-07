@@ -1,5 +1,6 @@
 {{ $slug := .File.BaseFileName }}
-{{ with index .Site.Data.edits $slug }}
+{{ with .Site.Data.edits }}
+{{ with index . $slug }}
 <aside class="post-edits">
   <h2 class="post-edits-heading">Edits</h2>
   <ol class="post-edits-list">
@@ -15,4 +16,5 @@
     {{ end }}
   </ol>
 </aside>
+{{ end }}
 {{ end }}
