@@ -13,8 +13,6 @@ The bot reads and writes files in the Hugo repo directly. No separate editorial 
 
 When the commit script sees a diff that would flip `draft: true` to `draft: false`, it refuses. There is an environment variable to override it — `ALLOW_PUBLISH=1` — but the bot cannot set that. Only I can, and only when I am sitting at a terminal reviewing the change.
 
-This is not about trust. It is about making the failure mode impossible. An agent that can publish will eventually publish something it should not, not out of malice but because a prompt went sideways or a hallucination looked plausible. If the tool literally cannot do the thing, that class of bug does not exist.
-
 The concrete setup:
 
 - the bot has its own Hermes profile with blog-specific memory and tools;
