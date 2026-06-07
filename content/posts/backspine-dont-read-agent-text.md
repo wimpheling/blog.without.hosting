@@ -13,7 +13,12 @@ Coding agents are here to produce code. Not blabla about it. The textual output 
 
 ## The bad feedback loop
 
-Instead of evaluating the agent's output (the code, the diff, the structural changes), you evaluate what it tells you about its output. Research has shown that what agents actually implement does not necessarily match the discourse they have about it. The agent sounds confident. You approve. The code is wrong.
+Instead of evaluating the agent's output (the code, the diff, the structural changes), you evaluate what it tells you about its output. The agent sounds confident. You approve. The code is wrong.
+
+> "Every agent in production lies. We measured it. The good ones lie less, the great ones catch the lie before the user does."
+> — opening line of a [29-minute video circulating on X](https://x.com/i/status/2063318596202242171), attributed to an Anthropic engineer. The source is the tweet itself — I couldn't find a canonical version on YouTube, on Anthropic's blog, or anywhere else. ([ongoing investigation: [Brady, rody, and the Polymarket-DAO provenance of a viral AI quote](https://blog.without.hosting/posts/x-ai-quote-fabrication/)])
+
+The "we measured it" part is what makes the line land. Not vibes. Not a hot take. Someone inside the lab is asserting that agent confidence is a measurable signal, and the metric is a liar. The rest of your team's review process should treat the agent's prose the same way: as a variable, not a fact.
 
 This is the same dynamic as the "thinking" token phenomenon. At first, we loved watching it live on DeepSeek — peeking into the model's "reasoning." Now most of us hide it. It was additive for about a week, then became noise.
 
