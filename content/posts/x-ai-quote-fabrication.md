@@ -1,7 +1,7 @@
 ---
 title: "Anthropic Engineer or Quote Fabrication? An Open Investigation"
 date: 2026-06-07T00:50:00+00:00
-unlisted: true
+unlisted: false
 tags: ["hot takes", "investigation", "ai-conferences"]
 toc: true
 description: "A 29-minute video on X claims to be a real Anthropic engineer giving a candid talk. The quote is good. The transcript says otherwise. This is an open investigation into who posted it and why."
