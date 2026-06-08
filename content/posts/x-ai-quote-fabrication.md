@@ -9,6 +9,16 @@ description: "A 29-minute video on X claims to be a real Anthropic engineer givi
 
 > **Status: live, ongoing.** The account is a systematic content farm posting 2–3 fabricated quotes daily. The DAO behind it is a ~5-month-old shell with unverifiable leadership and a false "Official Polymarket Community" claim. Last updated: 2026-06-08.
 
+Here is what this investigation has found so far, in brief:
+
+- **The quote is not in the video.** I transcribed the full 29 minutes via Deepgram. It is an Elicit talk about a DSL for research workflows. The word "lie" does not appear once.
+- **"James Brady" is not a person I can verify at Anthropic.** The only James Brady in the world's search indexes is a White House press secretary who died in 2014.
+- **The poster, @0x_rody, runs a daily content farm.** 2–3 posts every day, each following the exact same template: a provocative quote attributed to an AI figure, paired with a real video from a different context, ending with "save the config below."
+- **The DAO in rody's bio (ZSC DAO / zerosupercycle) is a ~5-month-old operation** with a false "Official Polymarket Community" designation, unverifiable leadership, no product, and no media footprint.
+- **This is a systematic funnel, not a one-off.** The fabricated quotes drive engagement that routes toward Claude Code configs and, ultimately, Polymarket awareness.
+
+The sections below walk through the receipts for each claim.
+
 I keep seeing videos on X attributed to "An Anthropic engineer" or "An OpenAI researcher" giving a 20–30 minute talk about agent reliability, prompt injection, or some other sharp operational topic. The quotes that come out of them are perfect. They sound like the inside view. They are also extremely shareable.
 
 Last week, one of these videos showed up in my feed again. It had 29 minutes of content. The opening line was the one I quoted in [Stop Reading What Your Coding Agent Says](https://blog.without.hosting/posts/backspine-dont-read-agent-text/):
