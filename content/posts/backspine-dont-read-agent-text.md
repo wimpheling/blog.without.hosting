@@ -18,7 +18,7 @@ Instead of evaluating the agent's output (the code, the diff, the structural cha
 > "Every agent in production lies. We measured it. The good ones lie less, the great ones catch the lie before the user does."
 > — attributed to "Anthropic engineer James Brady" from a [29-minute video on X](https://x.com/i/status/2063318596202242171). **Update (2026-06-08): the full transcript of this video shows it is an Elicit talk about DSL design for research workflows. The quote does not appear in the video. The attribution is fabricated.** See the [full investigation](https://blog.without.hosting/posts/x-ai-quote-fabrication/) for the Deepgram transcript and all receipts.
 
-The "we measured it" part is what makes the line land. Not vibes. Not a hot take. Someone inside the lab is asserting that agent confidence is a measurable signal, and the metric is a liar. The rest of your team's review process should treat the agent's prose the same way: as a variable, not a fact.
+The "we measured it" part is what makes the line land — or rather, what *would* make it land if it had been said by the person it was attributed to. The quote turned out to be fabricated (the [full investigation](https://blog.without.hosting/posts/x-ai-quote-fabrication/) confirms the video is from a different talk entirely). But the structural point holds regardless of who said it: if an agent sounds confident, the confidence should not be mistaken for correctness. The rest of your team's review process should treat the agent's prose as a variable, not a fact.
 
 This is the same dynamic as the "thinking" token phenomenon. At first, we loved watching it live on DeepSeek — peeking into the model's "reasoning." Now most of us hide it. It was additive for about a week, then became noise.
 
