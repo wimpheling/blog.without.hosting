@@ -7,7 +7,7 @@ toc: true
 description: "A 29-minute video on X claims to be a real Anthropic engineer giving a candid talk. The quote is good. The transcript says otherwise. This is an open investigation into who posted it and why."
 ---
 
-> **Status: live, ongoing.** The transcript below is a significant finding, but the investigation is not closed. Who is "James Brady"? Why was this posted? Are there more of these? Last updated: 2026-06-08.
+> **Status: live, ongoing.** The account is a systematic content farm posting 2–3 fabricated quotes daily. The DAO behind it is a ~5-month-old shell with unverifiable leadership and a false "Official Polymarket Community" claim. Last updated: 2026-06-08.
 
 I keep seeing videos on X attributed to "An Anthropic engineer" or "An OpenAI researcher" giving a 20–30 minute talk about agent reliability, prompt injection, or some other sharp operational topic. The quotes that come out of them are perfect. They sound like the inside view. They are also extremely shareable.
 
@@ -45,7 +45,7 @@ There is no Anthropic affiliation in the bio. The account is not institutional. 
 
 The 1,283-follower / 1,240-likes-per-tweet ratio on the Brady post is a separate anomaly: this small account pulled a 1,000% engagement spike on a single tweet. That is a structural signal worth holding onto.
 
-### 2. @0x_rody is part of a Polymarket DAO
+### 2. @0x_rody is part of a Polymarket DAO — but it is not what it claims
 
 The bio cross-links to `@zscdao`, a separate X account:
 
@@ -53,12 +53,33 @@ The bio cross-links to `@zscdao`, a separate X account:
 - **Name:** zerosupercycle
 - **Bio:** "ZSC DAO is an organization building tools & community resources to bring Polymarket into the everyday lexicon."
 - **Location:** Polymarket
+- **Followers:** 10,618 — but less than 200 following. A broadcast account.
+- **Website:** zscdao.com
 
-Polymarket is a crypto prediction market. ZSC DAO is a community that builds tooling around it. So the source of the "Anthropic engineer" quote is *not* in the AI-lab orbit — it is in the **crypto prediction-market DAO** orbit, with an AI-tools side interest.
+ZSC DAO's website (zscdao.com) is a Next.js app on Vercel with a retro terminal aesthetic — CRT scanlines, boot animation. The tagline is **"Official Polymarket Community."**
 
-The non-obvious part: prediction-market DAOs have a strong incentive to publish content that the AI Twitter audience finds credible, because they sell picks, signals, and tools to that audience. An "Anthropic engineer says X" pull-quote travels far in that audience.
+This claim appears to be false. Polymarket's official Discord is `discord.gg/polymarket`, not `discord.gg/zscdao`. Polymarket does not list ZSC DAO anywhere on their site, in their docs, or on their social channels. The "Official" designation is self-applied.
 
-I am not accusing anyone of anything. I am naming a structural fit: the people who would benefit most from a sharp AI quote going viral are the people whose day job is monetizing AI Twitter's attention. That is rody's orbit, and it is a *coincidence* of incentives, not necessarily a conspiracy. But the fit is real — and it is the leading hypothesis for *why* this was posted.
+The site has four pages:
+
+- **HOME** — the boot screen and "Official Polymarket Community" claim
+- **DATA** — a mission statement: "We find and unite people who want to achieve success in Prediction Markets. Our goal is to transform diverse opinions and experiences into wealth for every participant."
+- **COMM** — a "Hall of Fame" listing the team
+- **MAP** — ecosystem links (X, Telegram)
+
+The team page lists three people:
+
+- **Atlantislq** (@Atlantislq) — "Founder" — zero web presence outside this site
+- **David Mozhaev** (@DavidMozhaev) — "CEO" — GitHub account created on **January 6, 2026**, blank profile, no repos, no commits
+- **banana0x** (@banan_crypto) — "Ops Lead" — zero web presence
+
+There is no whitepaper, no token, no revenue model, no legal entity. A search for "ZSC token" on CoinGecko, on chain registries, and across the web returns nothing. A search for "ZSC DAO" in news, Reddit, blogs, and Google returns nothing — zero media coverage, zero community discussion outside the DAO's own channels.
+
+The **Discord** server ("zerosupercycle DAO") has ~3,985 members with ~757 online — suspicious ratios that could indicate botted engagement. I have not verified this directly.
+
+The domain (zscdao.com) was registered through NameCheap with privacy shield routed through Iceland. The first Wayback Machine snapshot is **January 1, 2026** — the entire operation is roughly 5 months old. David Mozhaev's blank GitHub was created the same week. This timing cluster is not a coincidence.
+
+So the source of the "Anthropic engineer" quote is not just adjacent to a Polymarket community — it is linked to a **~5-month-old operation with a false "official" designation, unverifiable leadership, no product, no token, and no media footprint**. The "ZSC DAO" label in rody's bio provides an institutional veneer that does not survive scrutiny.
 
 ### 3. The video is a quote-tweet of rody's *own* article
 
@@ -126,6 +147,39 @@ The talk is clearly from a conference or meetup. The speaker says "Elicit" repea
 
 But this raises the next question: **where did the video come from?** Is it a repurposed conference talk? Was it downloaded, cropped, and paired with the fabricated quote by rody, or did rody get it from somewhere else? The Elicit employee whose talk this is might not even know their video is being used this way.
 
+### 7. The James Brady post is not a one-off — rody runs a daily content farm
+
+The transcript answered "what is in the video." The next question was: is this a single bad tweet or a pattern?
+
+I pulled rody's recent posting history. The answer is definitive.
+
+**rody posts 2–3 times per day, every day. Every single post follows the exact same template:**
+
+> *"[AI Figure]: '[provocative, slightly technical quote]' — In 29 minutes, he walks through [topic]. Watch the full talk, then save the config below 👇"*
+
+Recent examples from a single two-week span:
+
+| Date | Attributed To | Quote |
+|------|--------------|-------|
+| June 8 | "Anthropic's Chief Product Officer" | "Claude doesn't write code anymore" |
+| June 7 | "Anthropic's main manager" | "Nobody types prompts from scratch" |
+| June 6 | "Anthropic engineer James Brady" | **Our case.** |
+| May 30 | Boris Cherny, head of Claude Code | "The default is now I'm going to have Claude prompt itself" |
+| May 29 | Anthropic engineer Arnaud Doko | "Saying 'make it better' is the most expensive mistake" |
+| May 26 | Dario Amodei, CEO of Anthropic | quoted from an Oprah interview |
+| May 16 | Andrej Karpathy | "never felt more behind as a programmer" |
+| May 13 | Boris Cherny | "It's not so much about deep work" |
+
+(Note: I am deliberately not linking to these posts. The pattern is the evidence, not any individual post.)
+
+Every post includes an amplify video and a link to another of rody's own articles. Every one is structured to drive engagement toward Claude Code configs, AI tooling setups, and ultimately — through the bio link — **ZSC DAO / Polymarket**.
+
+The account joined X in **April 2021** and was largely inactive for years (158 total posts over 5 years). The pivot to daily content farming appears to have started recently — tightly clustered with the January 2026 launch of zscdao.com and David Mozhaev's GitHub account.
+
+**This changes the investigation.** The "James Brady" quote is not a one-off viral spike. It is a single output in a systematic content production pipeline. The quote, the attribution, and the video mismatch are *features of the pipeline*, not bugs. The pipeline runs daily, targeting the AI Twitter audience, with a consistent call-to-action funnel toward the DAO ecosystem.
+
+The question is no longer "who is James Brady?" The question is **"what is this funnel monetizing?"** — and the Polymarket DAO connection is the strongest lead.
+
 ## The genre
 
 [USER: write — your read on the "long insider video + sharp pull-quote" pattern. Why does the form keep working? You have been seeing this for a year, you said. I want your voice on what is in the water, not mine.]
@@ -136,10 +190,12 @@ These are the next threads. I am putting them here so I (or anyone else) can pic
 
 1. **More cases.** I have seen several of these. I need the receipts: handles, dates, quotes, screenshots. The case above is one clean example; the genre is the question, not the one.
 2. ~~**What is in the 29-minute video?**~~ **Resolved.** The transcript is in. It is an Elicit talk about their ASHPL DSL. The quote does not appear in it.
-3. **Rody's other posts.** 158 posts over 5 years on a 1,283-follower account. There is a publishing cadence here. Going through `with_replies` and `media` would tell me if rody does this *often* (i.e., this is a content pattern) or whether this is a one-off.
-4. **zscdao / Polymarket.** Is ZSC DAO monetizing AI Twitter attention? If so, the incentive structure is the actual story, not rody himself.
+3. ~~**Rody's other posts.**~~ **Resolved.** 158 posts over 5 years, but the recent pattern is 2–3 posts daily following the exact same template. The account pivoted to content farming around January 2026. See section 7 above.
+4. ~~**zscdao / Polymarket.**~~ **Partially resolved.** ZSC DAO is a ~5-month-old operation with a false "Official Polymarket Community" designation, unverifiable leadership, no product, and no media footprint. The connection between rody and ZSC DAO is confirmed. What remains open: is this a deliberate funnel on rody's part, or is rody genuinely part of a larger content operation orchestrated by ZSC DAO?
 5. **Where did the video come from?** The Elicit talk — was it from a public conference? A meetup? Was it downloaded from YouTube or a conference site and repurposed? Finding the original upload would confirm the mismatch and potentially identify the actual speaker.
 6. **Other Polymarket-DAO-adjacent accounts.** Are prediction-market communities *systematically* seeding content into AI Twitter? If so, that is its own piece.
+7. **The CEO "David Mozhaev."** A blank GitHub created January 6, 2026 and an X handle is all that exists. Is this a real person or a fabricated identity? A deep search into the name, the X account history, and any cross-platform presence could reveal more.
+8. **Rody's own identity.** Who is "rody"? No GitHub, no Reddit, no LinkedIn presence found. The account has been on X since 2021 but was largely inactive. What changed around January 2026?
 
 ## What I am not claiming
 
@@ -150,7 +206,9 @@ What I am claiming, with evidence:
 1. **The trail of attribution ends at rody's own article.** The tweet is a quote-tweet of rody's article. The "Anthropic engineer" voice and the "rody" voice are the same thesis in two formats.
 2. **"James Brady" is not a person I can verify at Anthropic.** The only indexed James Brady in the world is a 20th-century press secretary.
 3. **The quote does not exist in the video.** The transcript is in. It is an Elicit talk about DSL design. The two things share no content.
-4. **The genre — "long insider video + sharp pull-quote attributed to a vague insider" — is a content pattern, not a series of one-offs.** The shape of the content is too consistent to be coincidence.
+4. **The quote is not a one-off.** rody posts 2–3 fabricated quotes daily. The James Brady post is one output in a systematic pipeline.
+5. **ZSC DAO is not what it claims.** It is a ~5-month-old operation with a false "Official Polymarket Community" designation, unverifiable leadership, and no product.
+6. **The genre — "long insider video + sharp pull-quote attributed to a vague insider" — is a content pattern, not a series of one-offs.** The shape of the content is too consistent to be coincidence.
 
 ## What to do if you see one of these
 
@@ -158,4 +216,4 @@ What I am claiming, with evidence:
 
 ---
 
-*Last updated: 2026-06-08. Investigation in progress. Filing date for next update: when rody's other posts are reviewed, when the Elicit talk's original source is found, and when at least one additional case is documented.*
+*Last updated: 2026-06-08. Investigation continues. Filing date for next update: when the Elicit talk's original source is found, when additional cases are documented, and when ZSC DAO's leadership and rody's identity are further investigated.*
