@@ -7,7 +7,7 @@ toc: true
 description: "A 29-minute video on X claims to be a real Anthropic engineer giving a candid talk. The quote is good. The source is shaky. Opening an investigation."
 ---
 
-> **Status: live, ongoing.** I am pulling on threads. Things below will move. Last updated: 2026-06-07.
+> **Status: live, updated with transcript evidence.** The video is real. The talk is real. The quote attributed to "James Brady" does not appear in it. Last updated: 2026-06-08.
 
 I keep seeing videos on X attributed to "An Anthropic engineer" or "An OpenAI researcher" giving a 20–30 minute talk about agent reliability, prompt injection, or some other sharp operational topic. The quotes that come out of them are perfect. They sound like the inside view. They are also extremely shareable.
 
@@ -115,6 +115,35 @@ While looking for Brady, I found the *real* Anthropic engineering content on the
 
 The contrast matters. The Brady quote is **sharper and more quotable** than anything in Anthropic's own engineering blog. That is not evidence of fraud — it is evidence of stylization. Real engineering writing is hedged. The Brady quote is not hedged. That alone puts it in a different genre from Anthropic's own writing on the topic.
 
+### 6. The transcript: the 29-minute video is not about "agents lying"
+
+This is the finding that changes the investigation. I pulled the audio from the tweet's video and transcribed it through Deepgram's Nova-2 model. The transcript is 5,095 words.
+
+**The video is a talk by someone from Elicit — the AI research assistant — about ASHPL, their domain-specific language for agentic workflows.** It is not an Anthropic talk. It is not about a "verification stack." It is not by "James Brady."
+
+The speaker walks through:
+
+- Why Elicit chose a DSL over freeform agent architectures;
+- The ASHPL language design: a Turing-incomplete, pure functional subset of Python with domain primitives for retrieving academic papers and clinical trials;
+- The event-sourcing pattern that drives iterative plan-and-execute loops;
+- A live demo generating a research landscape table about foundation models for biology — searching academic papers, web sources, filtering, extracting, and joining results across multiple passes;
+- How memoization and content-addressable storage make full-program reinterpretation efficient (the entire ASHPL program is reinterpreted from scratch on every edit, but cached results make it fast).
+
+The word "lie" does not appear anywhere in the transcript. Neither does "lying," "fabrication," "caught," or "verification stack." The closest the speaker gets to the Brady quote's territory is a remark about trust: the mechanism of how an output is produced matters, not just the output itself. But that is a general point about process legibility, not a claim about measuring agent dishonesty in production.
+
+The talk is also clearly from a conference or meetup, not an internal Anthropic talk. The speaker says "Elicit" repeatedly. The slide deck references elicit.com. The demo is a live Elicit session. The vocabulary — "research landscape," "clinical trials," "academic papers," "systematic review" — is the vocabulary of scientific research tooling, not of agent-safety engineering at a frontier lab.
+
+**This closes open lead #2 ("What is in the 29-minute video?").** The video is a real talk by a real person at Elicit. The quote has been superimposed onto it. The attribution to "Anthropic engineer James Brady" is text that wraps around a completely different piece of content.
+
+I am now updating my assessment:
+
+- **The video is real.** It is a legitimate conference talk about Elicit's DSL architecture.
+- **The quote is not in the video.** The 24-word opening line attributed to "James Brady" was not said by the speaker.
+- **The name "James Brady" is not verifiable at Anthropic.** He does not appear in Anthropic's engineering blog, events page, careers page, or any web search that does not return a 20th-century press secretary.
+- **The attribution is a fabrication.** A real talk was taken, paired with a quote that does not appear in it, and attributed to a person who cannot be found — from an account that sits in a Polymarket DAO ecosystem with a structural incentive to produce viral AI content.
+
+The tweet text ("Every agent in production lies...") describes *rody's own article*, not the video. The video is about something else entirely. The headline quote and the video content are mismatched.
+
 ## The genre
 
 [USER: write — your read on the "long insider video + sharp pull-quote" pattern. Why does the form keep working? You have been seeing this for a year, you said. I want your voice on what is in the water, not mine.]
@@ -124,20 +153,21 @@ The contrast matters. The Brady quote is **sharper and more quotable** than anyt
 These are the next threads. I am putting them here so I (or anyone else) can pick them up.
 
 1. **More cases.** The user (@bully) said they have seen several of these. I need the receipts: handles, dates, quotes, screenshots. The case above is one clean example; the genre is the question, not the one.
-2. **What is in the 29-minute video?** Has anyone actually watched it? The video duration claim (29:15) appears in the quote-tweet. Watching it would settle several questions at once: real face? AI avatar? Slide deck? Stock footage? The transcript, if I can pull it, will tell us what the rest of the talk is.
+2. ~~**What is in the 29-minute video?**~~ **Resolved.** The transcript is in. It is an Elicit talk about their ASHPL DSL. The quote does not appear in it. Full transcript available in the investigation archive.
 3. **Rody's other posts.** 158 posts over 5 years on a 1,283-follower account. There is a publishing cadence here. Going through `with_replies` and `media` would tell me if rody does this *often* (i.e., this is a content pattern) or whether this is a one-off.
 4. **zscdao / Polymarket.** Is ZSC DAO monetizing AI Twitter attention? If so, the incentive structure I sketched above is the actual story, not rody himself.
 5. **Other Polymarket-DAO-adjacent accounts.** This is the meta-question: are prediction-market communities *systematically* seeding content into AI Twitter? If so, that is its own piece.
 
-## What I am not claiming
+## What I am now claiming
 
-I am not claiming Brady is fake. I am not claiming rody is a fraud. I am not claiming the quote is wrong. The quote is probably *true as a description of agent behavior* — the part I quoted in [Stop Reading What Your Coding Agent Says](https://blog.without.hosting/posts/backspine-dont-read-agent-text/) holds up regardless of who said it, because Anthropic's own engineering posts say substantially the same thing, in different words.
+The transcript changes the strength of the claims I can make. I now have evidence for each:
 
-I am claiming three things, with evidence for each:
+1. **The quote does not exist in the video.** The full 5,095-word transcript contains nothing resembling "Every agent in production lies. We measured it..." The video is an Elicit talk about DSL design for research workflows. The two things share no content.
+2. **The attribution to "James Brady at Anthropic" is unverifiable.** The name does not appear in Anthropic's engineering blog, events page, careers page, or any web search that does not return a 20th-century press secretary. The video's actual speaker is an Elicit employee who does not identify as Brady.
+3. **The tweet's head quote describes rody's own article, not the video.** The quote-tweet is from rody's own article posted 92 minutes earlier. The video is about something entirely different. The headline and the content are mismatched.
+4. **The genre — "long insider video + sharp pull-quote attributed to a vague insider" — is a content pattern, not a series of one-offs.** The shape of the content is too consistent to be coincidence. Whoever is making these, they have a template.
 
-1. **The trail of attribution ends at rody's own article.** The Brady tweet is a quote-tweet of rody's article. The "Anthropic engineer" voice and the "rody" voice are the same thesis in two formats.
-2. **"James Brady" is not a person I can verify at Anthropic.** The only indexed James Brady in the world is a 20th-century press secretary. Anthropic's own engineering and events pages do not list a Brady. The name is, at best, unverifiable.
-3. **The genre — "long insider video + sharp pull-quote attributed to a vague insider" — is a content pattern, not a series of one-offs.** The shape of the content is too consistent to be coincidence. Whoever is making these, they have a template.
+I am no longer saying "I cannot verify the quote." I am saying: **the quote was not said in this video.** Whether the quote is accurate as a description of agent behavior is a separate question — and I still think it is true, which is why I originally quoted it. But the attribution to "Anthropic engineer James Brady in a 29-minute talk" is not supported by the evidence.
 
 ## What to do if you see one of these
 
