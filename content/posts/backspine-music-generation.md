@@ -55,24 +55,34 @@ This is the [recompile from spec](https://blog.without.hosting/posts/backspine-r
 
 ## Parametric drumkits, not sample banks
 
-The other half of this: **choose parametric VSTs, not sample banks.**
+The other half of this: **choose parametric surfaces, not sample banks.**
 
-Sample banks give you fixed recordings. A snare hit is a snare hit. You cannot tighten the skin, move the microphone, or change the shell depth. The model's output is a sample index — a catalog lookup, not a parameter change.
+A sample bank gives you a fixed recording. A snare hit is a snare hit. You cannot tighten the skin, move the microphone, or change the shell depth. The model's output is a sample index — a catalog lookup, not a parameter change.
 
-Parametric drumkits (like Ableton's Drum Machine or third-party physical-modeling VSTs) expose every dimension of the sound as a continuous parameter. Skin tension. Shell resonance. Mic position. Room size. The model can output *floats*, not indices.
+A parametric surface exposes every dimension of the sound as a continuous value. The model outputs *floats*, not indices. This is the [code islands](https://blog.without.hosting/posts/backspine-code-islands/) pattern in sound: the snare is a scoped, parameterized unit. Changing the tension does not change the kick.
 
-This is the [code islands](https://blog.without.hosting/posts/backspine-code-islands/) pattern in sound: the snare is a scoped, parameterized unit with well-defined inputs. Changing the tension does not change the kick. The sound designer can optimize the snare without side effects.
+## The parametric VST landscape is sparse
 
-[USER: write — what parametric VSTs actually work well for this? Ableton Drum Machine? Physical modeling? What's the MIDI/parameter mapping latency?]
+I researched this. There is no free VST that exposes continuous physical-modeling parameters for drums. Here is what actually exists:
+
+- **Ableton's built-in instruments** (Operator, Analog, Drum Rack) — *already parametric.* Operator is an FM synth that maps every operator parameter to automation. You can build a kick from its envelope, ratio, and modulation depth. Not physically modeled (no "skin tension"), but fully parameter-automatable. Free with Live.
+
+- **Modo Drum** (IK Multimedia) — the closest thing to a true physical-modeling drum VST. Exposes skin tension, shell resonance, mic position, room size as continuous VST parameters. The free version is a locked player — one preset kit with no parameter access. The parametric surface lives in the paid version.
+
+- **Everything else** is sample-based. DrumGizmo, MT Power Drum Kit, Sitala, BPB Dirty Drum — ROMplers with velocity layers. You hit C1 at velocity 100 and get the same snare sample every time, slightly louder. The model could only output a hit/no-hit decision, not a timbre change.
+
+This gap is revealing. The plugin ecosystem is designed for *humans* clicking sliders. Nobody has built for an LLM adjusting skin tension by 0.02 because the agent-in-the-loop use case did not exist last year. The parametric surface exists (Ableton devices map any parameter to automation; Modo Drum has the continuous controls) but it has not been wired to an LLM backend yet.
+
+[USER: write — does the new Ableton SDK expose VST parameters as automatable targets the same way native device parameters are? Can you read and write any VST float parameter from outside Live? How does macro mapping interact with the SDK boundary?]
 
 ## What exists today
 
 The parts exist:
 
 - **Ableton SDK** (2026) — plugin integration, parameter access, audio routing
-- **Stable Audio** / **Google Magenta** — audio analysis and structured output extraction
+- **Stable Audio / Google Magenta** — audio analysis and structured output extraction
 - **MIDI** — deterministic, well-understood instruction format
-- **Parametric drum VSTs** — continuous parameter surfaces for physical sound modeling
+- **Ableton's built-in devices** (Operator, Analog) — parametric surfaces that expose every parameter to automation. Modo Drum (paid) for physical modeling if the budget allows.
 
 What does not exist yet is the *agent layer* that connects them: a model that hears raw Ableton output, decides "the snare needs more body, tighten the skin from 0.6 to 0.72 and move the mic from 0.3 to 0.4", and outputs those parameters — without trying to generate the actual waveform.
 
