@@ -116,7 +116,52 @@ The parts exist:
 
 What does not exist yet is the *agent layer* that connects them: a model that hears raw Ableton output, decides "the snare needs more body, tighten the skin from 0.6 to 0.72 and move the mic from 0.3 to 0.4", and outputs those parameters — without trying to generate the actual waveform.
 
-[USER: write — is this just a MIDI effects rack with an LLM backend? Or does it need a full plugin host? Where does the backspine boundary between agent and execution sit?]
+## Can we actually build this?
+
+I looked into every component. Some of it exists. Some of it needs to be built. Here is the honest assessment:
+
+**Audio → MIDI — yes, open and mature.**
+
+Spotify's Basic Pitch (Apache 2.0) does polyphonic pitch + onset detection from raw audio. Run it on 1s of audio and it returns note events in ~50ms. Pair it with madmom for beat tracking (tempo, downbeats) and you have a pipeline that turns a waveform into structured note data. Demucs does source separation (drums, bass, vocals, other) if you want to isolate tracks first. All of it runs locally, no cloud API needed.
+
+**VST parameter control from outside Ableton — possible, but requires a bridge.**
+
+Ableton has no public SDK for external control. What it has:
+
+- **MIDI Remote Scripts**: Python code that runs inside Live and can set any exposed VST parameter via `device.parameters`. The catch: it runs inside Live. You would need a custom Remote Script that exposes a local socket (TCP or WebSocket), so your agent can push parameter values in.
+- **Max for Live**: Max patches inside Live can receive OSC and translate it to Live API calls. External agent → OSC → Max patch → VST parameter. Requires Max for Live (licensed) but is the cleanest path.
+- **MIDI CC**: Works if you manually map CC numbers to VST parameters. Not programmatic, but it is deterministic and low-latency.
+
+None of these are out of the box. All require building a bridge.
+
+**Real-time audio capture from Ableton — virtual audio cable.**
+
+Ableton does not stream its output over a network API. You need a system-level virtual audio driver (BlackHole, Loopback, Soundflower) to route Live's output into your agent's audio processing pipeline. This is standard in the music production world — people do it for streaming and podcasting every day. It is not elegant but it works.
+
+**The agent model itself — does not exist.**
+
+This is the real gap. We have audio → MIDI. We have MIDI → VST param. We have VST param → sound. What does not exist is the model that *listens to the output and decides what to change*.
+
+This is not a hard problem in the abstract. The decision space is well-bounded: on each loop iteration, hear the mix, compare against the spec ("tighter snare, no bass"), pick the most impactful parameter change, output new MIDI + params. The spec accumulates over time.
+
+The open question is whether this needs an LLM at all. A small model trained on drum mix decisions could probably do it faster and cheaper. But the LLM gives you natural-language spec input, which is the point of the backspine pattern — the spec is human-writable.
+
+**Latency budget**
+
+A realistic timeline for one loop iteration:
+
+| Step | Latency |
+|------|---------|
+| Audio capture (1 bar = ~2s at 120 BPM) | 0ms (captured during playback) |
+| Audio → MIDI (Basic Pitch) | ~100ms |
+| Beat tracking (madmom) | ~50ms |
+| LLM inference (small model) | 500ms–2s |
+| VST parameter write via bridge | ~10ms |
+| Total per iteration | ~0.7–2.2s |
+
+That is not real-time per-note control, but it is fast enough for a *mix iteration loop* — the agent adjusts the kit over a few bars, hears the result, adjusts again. The backspine pattern does not require per-note reactivity. It requires the spec to compile to correct instructions on each pass.
+
+[USER: write — would you build this as an Ableton plugin (runs inside the DAW, reads Live API directly) or as an external process (captures audio via loopback, sends MIDI back in)? The plugin path avoids the bridge complexity but locks you into Ableton. The external path generalizes to any DAW with loopback + MIDI input.]
 
 ## The harder question: melody, harmony, structure
 
