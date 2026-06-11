@@ -146,20 +146,53 @@ This is not a hard problem in the abstract. The decision space is well-bounded: 
 
 The open question is whether this needs an LLM at all. A small model trained on drum mix decisions could probably do it faster and cheaper. But the LLM gives you natural-language spec input, which is the point of the backspine pattern — the spec is human-writable.
 
+The realistic candidates for the inner loop model (the one that hears audio and outputs parameters):
+
+**Synthetic-data regression model (most practical)**
+
+Build a *parameter estimator*. Render your drum VST at hundreds of random parameter settings, record each variation as audio, and train a small CNN (spectrogram → MLP) to predict the VST parameters from the audio. The loop then works like this:
+
+1. Agent hears the current snare hit in the mix
+2. Run it through the estimator → predicts current params (skin tension: 0.4, mic blend: 0.5, etc.)
+3. Diff against target params derived from the spec
+4. Apply the delta
+
+The spec-to-target mapping is the only part needing language — a simple lookup table works: `"tighter snare"` → `{tension: 0.75, dampening: 0.3}`, `"more body"` → `{shell_resonance: 0.7}`. No LLM in the hot path.
+
+Training data is free: render the VST at random settings, record the output, train the model. The architecture is MobileNet-sized — <50ms inference on a CPU.
+
+**k-NN over a drum-sound library (zero training)**
+
+Build a library of (audio embedding, parameter settings) by sampling the VST across its parameter space. At inference, embed the current drum hit, find the nearest neighbor in the library, and the parameters fall out directly. No training, no gradient descent — just a nearest-neighbor search over a fixed vector database.
+
+This works because a snare's parameter space is low-dimensional: tension, tuning, dampening, mic position — maybe 5–10 floats. A coarse grid of 5 values per dimension gives ~390k entries. That is a few hundred MB of audio embeddings in a vector store. Search is sub-millisecond.
+
+**Differentiable DSP (most backspine-consistent, most ambitious)**
+
+Instead of a model that predicts parameters, build a differentiable drum synth and optimize parameters via gradient descent against a loss function derived from the spec. The spec defines a target spectrogram or feature vector, and gradient descent finds the synth params that produce it.
+
+Google's DDSP framework does exactly this — no training needed, the optimization runs at inference. The constraint: your drum VST is C++ and not differentiable. You would need to train a neural proxy that mimics the VST, then optimize through that proxy. Expensive to set up, cleanest to run.
+
+**The practical stack**
+
+The LLM enters only when the user writes a new spec line. Once `"tighter snare"` is translated to a target parameter vector (by the LLM, once), the feedback loop runs on a 50ms CNN inference. The spec is human-writable and the loop is fast. That is backspine: the LLM edits the spec (rare, high-level), the small model executes the loop (frequent, bounded).
+
 **Latency budget**
 
-A realistic timeline for one loop iteration:
+A realistic timeline for one loop iteration with the small-model path (no LLM on the hot path):
 
 | Step | Latency |
 |------|---------|
 | Audio capture (1 bar = ~2s at 120 BPM) | 0ms (captured during playback) |
 | Audio → MIDI (Basic Pitch) | ~100ms |
 | Beat tracking (madmom) | ~50ms |
-| LLM inference (small model) | 500ms–2s |
+| CNN parameter estimator inference | ~50ms |
 | VST parameter write via bridge | ~10ms |
-| Total per iteration | ~0.7–2.2s |
+| **Total per iteration** | **~210ms** |
 
-That is not real-time per-note control, but it is fast enough for a *mix iteration loop* — the agent adjusts the kit over a few bars, hears the result, adjusts again. The backspine pattern does not require per-note reactivity. It requires the spec to compile to correct instructions on each pass.
+With an LLM in the hot path, that same iteration becomes 0.7–2.2s because of inference latency. The small-model version stays under 250ms — fast enough to adjust parameters *within a single bar* and hear the result on the repeat.
+
+That is the difference between "tweak the kit over a few minutes" and "the agent adjusts while you play."
 
 [USER: write — would you build this as an Ableton plugin (runs inside the DAW, reads Live API directly) or as an external process (captures audio via loopback, sends MIDI back in)? The plugin path avoids the bridge complexity but locks you into Ableton. The external path generalizes to any DAW with loopback + MIDI input.]
 
