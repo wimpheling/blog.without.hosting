@@ -1,86 +1,112 @@
 ---
-title: "We Need a Quick for Backspine"
-date: 2026-06-11T23:30:00+00:00
+title: "Building an Open-Source Quick for Backspine"
+date: 2026-06-11T23:45:00+00:00
 unlisted: true
 tags: ["backspine"]
 toc: true
-description: "Shopify's Quick is a zero-config hosting platform for AI-generated HTML sites. Backspine needs the same thing: a hosting platform where the spec is the unit of deployment, not files."
+description: "Shopify's Quick is the best model for an AI-generated site host. Let's build the open-source version — Cloudflare-first, with an abstraction layer so you can self-host anywhere."
 ---
 
-[Shopify just published the story of Quick](https://shopify.engineering/quick), an internal platform where you drop a folder of HTML and get a secure URL. It provides a zero-config client-side API for databases, AI, file storage, websockets, and identity — all running on a single $200/month VM.
+[Shopify's Quick](https://shopify.engineering/quick) is the best model I have seen for hosting AI-generated sites. Drop a folder, get a URL with a zero-config backend — database, AI, file storage, websockets, identity. One VM, $200/month, 50,000 sites.
 
-It hosts over 50,000 internal sites. More than half of Shopify has created at least one. The key insight: *AI-generated HTML was the catalyst, but the zero-config backend was the unlock.* People could vibe-code a site, and Quick gave it persistence, AI capabilities, real-time collaboration, and a URL — in seconds.
+The question is: how do we build the open-source version, adapted for backspine?
 
-This is exactly right. And it makes the gap for backspine very obvious.
+## The architecture: adapter pattern from day one
 
-## What Quick gets right
+The mistake most Quick-like projects make is building for one cloud and locking in. The fix is boring but necessary: define the backend capabilities as interfaces, implement them once per target.
 
-Quick is not clever. It is opinionated and constrained. A fixed set of capabilities — database, file uploads, AI, websockets, identity — exposed as a client-side JavaScript API. No config files, no deployment pipelines, no permissions model (all sites are open to all employees, because it runs inside Shopify's trust bubble). The constraints are the point: a small surface keeps the platform simple to understand, maintain, and build on.
+```
+backspine/
+├── core/               # interfaces and types
+│   ├── db.ts           # collection, query, subscribe
+│   ├── storage.ts      # upload, serve, delete
+│   ├── ai.ts           # chat, image, embed
+│   ├── realtime.ts     # pub/sub, presence, cursors
+│   ├── identity.ts     # user, auth, session
+│   └── deploy.ts       # spec → output pipeline
+├── adapters/
+│   ├── cloudflare/     # Workers + D1 + R2 + Durable Objects
+│   ├── local/          # SQLite + filesystem for dev
+│   └── vps/            # Postgres + S3-compatible + nginx
+└── cli/
+    └── deploy.ts       # backspine deploy <target>
+```
 
-The architecture is almost comically straightforward:
-- Static files in a GCS bucket, mounted via gcsfuse, served by NGINX
-- A single Go server behind it handling the API services
-- IAP for auth (every request is already authenticated before it reaches the site)
-- That is it. One VM, $200/month.
+The user-facing API is the same regardless of backend:
 
-## What Quick does not touch
+```js
+const posts = backspine.db.collection('posts');
+await posts.create({ title: 'hello', body: 'world' });
 
-Quick is agnostic about code structure. It serves whatever you upload. The AI generation side is entirely in the user's hands — they prompt, they get HTML, they upload it to Quick via `quick deploy`.
+const res = await backspine.ai.chat([
+  { role: 'user', content: 'summarize this' }
+]);
+```
 
-This is where backspine enters. Backspine is not about serving files. It is about the *relationship between the spec and the generated code*. If Quick is the deployment platform for vibe-coded sites, backspine is the *architecture* that keeps those sites coherent across generations.
+This is Quick's client API adapted. The difference: Quick exposes it from a single Go VM. We expose it from an adapter layer that runs on Workers, a VPS, or your laptop.
 
-The gap: there is no platform that combines both.
+## Cloudflare-first
 
-## What a "Quick for backspine" would look like
+Cloudflare is the obvious first target because:
 
-Instead of deploying files, you deploy a *spec*. The platform:
+- **Workers**: global edge compute, generous free tier (100k requests/day)
+- **D1**: SQLite-compatible database with replication. Maps directly to Quick's `db.collection()` pattern.
+- **R2**: S3-compatible storage, no egress fees. Covers file uploads.
+- **Durable Objects**: real-time websockets and presence. Covers Quick's websocket API.
+- **Workers AI**: LLM inference on the edge (Llama, Mistral). Covers `ai.chat()`.
+- **Pages**: static file hosting with git integration. Covers the "drop a folder" deploy.
 
-1. **Hosts the spec** as the unit of truth. Not a folder of HTML — a document that describes what the site does, its data model, its visual style, its constraints.
-2. **Compiles the spec into code** on deploy. Every deploy is a fresh compilation from the current spec, using the [recompile from spec](https://blog.without.hosting/posts/backspine-llm-compiler/) pattern.
-3. **Provides the zero-config backend** — Quick's database, AI, websockets, identity, file storage. The same bundle, but integrated at the spec level rather than the client-side API level.
-4. **Manages code islands**. The spec defines structural boundaries. Changes to one island do not recompile the others. The [code islands](https://blog.without.hosting/posts/backspine-code-islands/) pattern becomes a runtime concept, not just a build-time convention.
-5. **Accumulates the spec**. Every user correction, every design system update, every data model change becomes part of the spec. The site is always one recompile away from the correct state.
+The Cloudflare adapter implements all six Quick capabilities. The deploy command becomes `backspine deploy --target cloudflare` and pushes your spec + assets to Workers + R2 + D1.
 
-The deploy loop becomes: edit spec → `backspine deploy` → platform recompiles → new site is live. The agent never touches generated code. It only touches the spec.
+The cost for a personal site: zero, unless you exceed free tier limits. Compare to Quick's $200/month VM that serves 50k internal sites — personal scale is free on Workers.
 
-## The philosophical difference
+## The VPS fallback
 
-Quick is **hosting for generated artifacts**. It takes the output of an AI generation and serves it with a backend. The generation is a separate step, owned by the user and their agent.
+The abstraction layer's value proposition: when Cloudflare's limits or policies don't fit, you move to a $5 VPS without rewriting anything.
 
-Backspine is **hosting for the generation process itself**. The platform owns the spec, the compilation, and the deployment. The agent works at the spec level, and the platform handles the rest.
+```
+backspine deploy --target vps
+```
 
-This matters because the backspine pattern *structurally prevents drift*. Quick does not prevent drift — it gives you a place to put the drifted artifact. With backspine, the spec is the only persistent state. The generated code is ephemeral.
+The VPS adapter uses the same interfaces:
+- SQLite or Postgres for `db.collection()`
+- Local filesystem or MinIO for storage
+- Your own LLM API keys for AI
+- nginx + websocket server for real-time
+- Caddy for TLS
 
-## What can be open-sourced
+The spec output compiles to the same deployable structure. The cost model changes (you pay for the VPS + your own API keys) but the development model does not.
 
-The Quick model is simple enough to replicate — a VM, a static file server, a database, an AI proxy, websocket support. The value is in the constraints and the integration, not in novel infrastructure.
+## The backspine integration
 
-An open-source backspine host would be different. The core challenges:
+Quick is agnostic about code structure — you upload whatever files your AI generated. A Quick-like platform for backspine should treat the spec as the deployable unit.
 
-- **Spec language**: What does a spec look like? YAML? A subset of Markdown? A JSON Schema? The platform needs a spec format that is human-writable, LLM-generatable, and compilable into working code.
-- **Compiler infrastructure**: The spec → code pipeline. This is the hard part. It is not a transpiler — it is an LLM call that produces structured output against a known template system. The platform needs to manage this predictably.
-- **Island boundary resolution**: When a spec change only affects one code island, the platform must detect that and recompile only the affected module. This is the equivalent of a build system knowing which source files changed.
-- **Spec accumulation**: Every user correction becomes a spec entry. The platform needs a versioned, mergeable spec history.
+The deploy pipeline:
 
-These are not insurmountable. They are the problems that backspine exists to solve.
+```
+spec.yml ──→ backspine compile ──→ generated code ──→ backspine deploy ──→ live site
+                                                         │
+                                                    ┌────┴────┐
+                                                    │  D1     │ R2
+                                                    │  DB     │ Files
+                                                    │  AI     │ WS
+                                                    └─────────┘
+```
 
-[USER: write — what is the minimum viable version? A CLI that takes a spec YAML and produces a Quick-compatible folder of HTML + a backend config? A server that hosts both the spec and the generated site? A hosted platform with auth, billing, and deployment? Where does the open-source boundary sit?]
+The spec is the source of truth. The generated code is ephemeral — the platform can regenerate it from the spec on every deploy without losing state (because state lives in the backend services, not in the generated code).
 
-## The Quick philosophy that carries over
+This is the [recompile from spec](https://blog.without.hosting/posts/backspine-llm-compiler/) pattern at the hosting level. The platform does not just serve files — it manages the relationship between the spec and its compiled output.
 
-The strongest lesson from Quick is the constraint discipline. A small, fixed set of capabilities — database, AI, real-time — is more powerful than a flexible platform with infinite options, *because it forces creativity into a bounded space*. The backspine equivalent: a small, fixed set of structural primitives (spec, islands, compiler, deploy) is more powerful than a general-purpose code-generation platform, because it forces the architecture to stay coherent.
+## What ships first
 
-Quick also proves the trust-bubble model works. A backspine host for personal projects needs no permissions model, no user management, no site ownership. Every site is open to the world. You overwrite a site by deploying over it. This is the [lrnwerkstatt](https://blog.without.hosting/posts/backspine-put-the-vibe-back-in-vibe-coding/) pattern — share everything, overwrite anything, learn from what others built.
+The minimum viable project:
 
-## The counterargument
+1. **Core interfaces** — the six capability types (db, storage, ai, realtime, identity, deploy). A TypeScript package.
+2. **Cloudflare adapter** — Workers implementation of all six. Deploy with `wrangler`.
+3. **CLI** — `backspine init` (scaffolds a spec), `backspine dev` (runs locally), `backspine deploy --target cloudflare`.
+4. **Spec format** — YAML that describes the site: routes, data models, AI features, style constraints. Compiler converts to Workers code.
+5. **VPS adapter** — the self-host fallback. SQLite, filesystem, nginx.
 
-Quick works at Shopify because it runs behind IAP — every user is a trusted employee. An open-source backspine host on the public internet cannot assume trust. The moment you expose a spec-to-deploy pipeline to the public, you have an abuse problem: people will deploy spam sites, phishing pages, crypto drainers using your infrastructure.
+The goal is not to build another platform. It is to build a *tool* that gives you Quick's capabilities on your own infrastructure, with Cloudflare as the generous free tier and a VPS as the escape hatch.
 
-Quick's answer ("internal trust bubble") does not translate to the open web. A backspine host needs either:
-- A managed service with vetting (like Netlify but for specs)
-- A personal hosting model (you run your own instance, the spec is yours)
-- A protocol layer (the spec format is open-source, anyone can host it)
-
-My bet is on the personal hosting model: **backspine-as-a-compiler, not backspine-as-a-service**. The spec format and compiler are open-source. You run your own VM (or use any static host) and the CLI compiles your spec into deployable output. The "Quick for backspine" is not a platform you sign up for — it is a tool you run.
-
-[USER: write — is that enough? A CLI that turns a spec into a deployable site is a build tool, not a platform. Does the platform add enough value over the tool to justify building it? Or is backspine best as a file format and a compiler, with hosting as an implementation detail?]
+[USER: write — what is the first real use case? Your own blog? A site generator for this blog's backspine experiments? An internal tool for your team? Pick one and scope the MVP around it.]
