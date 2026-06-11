@@ -61,28 +61,58 @@ A sample bank gives you a fixed recording. A snare hit is a snare hit. You canno
 
 A parametric surface exposes every dimension of the sound as a continuous value. The model outputs *floats*, not indices. This is the [code islands](https://blog.without.hosting/posts/backspine-code-islands/) pattern in sound: the snare is a scoped, parameterized unit. Changing the tension does not change the kick.
 
-## The parametric VST landscape is sparse
+## Two kinds of parametric surfaces
 
-I researched this. There is no free VST that exposes continuous physical-modeling parameters for drums. Here is what actually exists:
+My first version of this post drew a false line: "sample-based VSTs have no parameters, physical modeling VSTs do." That was wrong. Let me be more precise.
 
-- **Ableton's built-in instruments** (Operator, Analog, Drum Rack) — *already parametric.* Operator is an FM synth that maps every operator parameter to automation. You can build a kick from its envelope, ratio, and modulation depth. Not physically modeled (no "skin tension"), but fully parameter-automatable. Free with Live.
+A drum VST exposes *two different parametric domains*, and they are not the same thing:
 
-- **Modo Drum** (IK Multimedia) — the closest thing to a true physical-modeling drum VST. Exposes skin tension, shell resonance, mic position, room size as continuous VST parameters. The free version is a locked player — one preset kit with no parameter access. The parametric surface lives in the paid version.
+**1. Sound-modeling parameters** — change the drum itself. Shell depth, head material, tuning, skin tension, beater type. These only exist in physical-modeling engines like Modo Drum, where every drum component is a simulated physical object with continuous properties.
 
-- **Everything else** is sample-based. DrumGizmo, MT Power Drum Kit, Sitala, BPB Dirty Drum — ROMplers with velocity layers. You hit C1 at velocity 100 and get the same snare sample every time, slightly louder. The model could only output a hit/no-hit decision, not a timbre change.
+**2. Post-processing / mix parameters** — change how the recorded (or modeled) sound is shaped and blended. Mic mix, EQ, compression, envelope, transient shaping, bleed. These exist in *every* modern drum VST, regardless of whether the source is samples or a model.
 
-This gap is revealing. The plugin ecosystem is designed for *humans* clicking sliders. Nobody has built for an LLM adjusting skin tension by 0.02 because the agent-in-the-loop use case did not exist last year. The parametric surface exists (Ableton devices map any parameter to automation; Modo Drum has the continuous controls) but it has not been wired to an LLM backend yet.
+Steven Slate Drums 5.5 is a good example of domain (2). The drum hits are pure samples — multi-velocity, multi-mic recordings of real kits in Slate's studios. You cannot change the shell resonance or the head material. But the mixer strip exposes a rich parametric surface:
 
-[USER: write — does the new Ableton SDK expose VST parameters as automatable targets the same way native device parameters are? Can you read and write any VST float parameter from outside Live? How does macro mapping interact with the SDK boundary?]
+- **Mic mix** — per-mic volume faders (Kick In, Kick Out, Snare Top, Snare Bottom, OH, Room, etc.). The agent can blend mic positions continuously.
+- **3-band EQ** — gain and frequency per band, automatable.
+- **Compressor** — threshold, ratio, attack, release, makeup gain. Full VST automation.
+- **Envelope** — attack and release shaping per channel.
+- **Reverb send**, master tone filter, pan, output routing.
+
+That is roughly 15 automatable parameters per channel across 12+ channels — about 200 total. Not bad for a "sample player."
+
+Superior Drummer 3 pushes this further: per-mic bleed sliders, dedicated transient shaper (attack + sustain), fully parametric 4-band EQ, and a modular FX rack. Hundreds of automatable parameters across a full kit. Addictive Drums 2 adds a "Sound Designer" tab with pitch and damping controls that *simulate* modeling on top of samples.
+
+The real distinction:
+
+| Domain | What it controls | Example | VSTs |
+|--------|-----------------|---------|------|
+| Sound modeling | The drum itself — shell, head, tuning | "Snare shell resonance: 0.72" | Modo Drum (paid) |
+| Post-processing | Mix of the recorded sound — EQ, comp, blend | "Kick mic blend: close 0.6, room 0.3" | SSD 5.5, SD3, AD2, BFD3, EZD3 |
+| Synthesis | The sound from scratch — oscillators, FM | "Kick: sine sub 80Hz, FM ratio 3, decay 200ms" | Operator, Analog (built into Live) |
+
+All three are valid parametric surfaces for an agent. The difference is *what the parameter controls* — and therefore what the agent's spec can meaningfully adjust.
+
+The constraint is real but specific: with sample-based VSTs, the drum *tone* is frozen at recording time. The agent cannot tighten the snare skin on a sample of a loose snare. But it can:
+- Blend to a different mic that captured the snare differently
+- EQ out the boom and emphasize the crack
+- Compress and shape the transient
+- Add room bleed for depth
+
+That is not nothing. It is a different capability class from "change the shell depth from 5" to 6.5" and hear the difference," but both are parametric control surfaces. The blog post should not conflate mixing automation with sound synthesis.
+
+[USER: write — for the agent loop, does it matter whether the parameter controls post-processing of a fixed sample vs physical properties of a model? The spec says "tighter snare" — the agent that has SSD has to achieve this via EQ + compression + mic blend. The agent that has Modo Drum can dial skin tension up. Are these equivalent from the spec perspective? Or does the agent need to know its parametric surface?]
 
 ## What exists today
 
 The parts exist:
 
-- **Ableton SDK** (2026) — plugin integration, parameter access, audio routing
-- **Stable Audio / Google Magenta** — audio analysis and structured output extraction
-- **MIDI** — deterministic, well-understood instruction format
-- **Ableton's built-in devices** (Operator, Analog) — parametric surfaces that expose every parameter to automation. Modo Drum (paid) for physical modeling if the budget allows.
+| Domain | What exists today | Automatable |
+|--------|------------------|-------------|
+| Sound modeling | Modo Drum (paid) | Shell depth, head material, tuning, tension — all floats |
+| Post-processing | SSD 5.5, SD3, AD2, BFD3, EZD3 | Mic mix, EQ, compression, envelope, transient, bleed — all floats |
+| Synthesis | Operator, Analog (built in Live) | Every oscillator, envelope, modulation parameter |
+| Spec agent | Does not exist | The model that listens and decides what to change |
 
 What does not exist yet is the *agent layer* that connects them: a model that hears raw Ableton output, decides "the snare needs more body, tighten the skin from 0.6 to 0.72 and move the mic from 0.3 to 0.4", and outputs those parameters — without trying to generate the actual waveform.
 
