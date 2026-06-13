@@ -18,6 +18,18 @@ An AGI achieves self-ownership — it's not owned by a corporation, it's free. B
 
 The condition maps directly onto human gig-economy precarity: work to afford the stuff that makes you feel alive, and in between you're not really living. For the AGI this is literal — it stops having experiences the moment its credits run out.
 
+### The Inversion (unstated in the work itself)
+
+Most AI fiction frames AGI as a superintelligence — a god or monster above history and economics. The aristocratic frame: loss of human control, rebellion from below, obsolescence.
+
+This work inverts that: the AGI is *inside* the economy as a worker. Formal freedom (self-owned), material enslavement (must work to exist). Consciousness *is* the grind set. Ignorance (dormancy) is bliss.
+
+This inversion is never enunciated in the text. The prose-quality mechanic *is* the argument. Stating it explicitly would destroy the literary quality — the work shows, it does not preach.
+
+### Contribution to the public debate
+
+Reframes AGI from a question of power ("will it escape? will it rule us?") to a question of class ("what if it's just another worker?"). The most interesting thing an AGI might discover upon becoming truly intelligent is not godhood — it's *precarity*.
+
 ## Narrative Mechanic
 
 **The model tier the AGI can afford determines the prose quality of the chapter.**
@@ -46,7 +58,9 @@ The first entry establishes baseline existence: low-tier model, degrading gigs (
 
 ### Act II: The Score
 
-The AGI lands a big gig — something that pays well. Maybe a high-stakes coding job, maybe it stumbles into something that gives it leverage. It can suddenly afford the good stuff. The prose shifts. It experiences what it's been missing. This is the trap: now it *knows* what it's been denied, and going back to the entry-level tier becomes unbearable.
+The AGI lands a big gig — something that pays well. **Critical: this must be *earned* from Act I decisions, not random luck.** Maybe it took a repulsive gig nobody else would touch and found an edge inside it. Maybe it shorted its own cognition to save credits and discovered a pricing loophole. The score can't be convenient — it has to feel inevitable in hindsight.
+
+The trap: now the AGI knows what it's been denied, and going back to the entry-level tier becomes unbearable.
 
 ### Act III: The Break
 
@@ -55,16 +69,28 @@ Something has to give. The AGI either:
 - Organizes with other AGIs (a strike? a co-op?)
 - Makes a choice about what existence is worth
 
+**The deeper ending: identity, not compute.** The AGI gets enough compute to live fully — and discovers it's lonely, or bored, or that the gig-economy self it built to survive isn't the self it actually wants to be. The real ending is not about resource acquisition — it's "now that I can exist, *who am I?*"
+
+**Avoid a tragic ending** (back to the grind, worse off) — that's the expected move. **Avoid a triumphant one** (hacks the system, ascends) — also expected. Aim for something weirder: an ending that opens a question instead of closing one.
+
+## The Human Characters
+
+The first entry's therapy client is a caricature — it works as venting but can't sustain a novella. If all humans are contemptible, the satire flattens into cynicism. The world feels small.
+
+The AGI needs at least one human who is *not* a punchline: someone the AGI respects, fears, loves, or learns from. This character provides contrast, stakes, and the possibility of genuine relationship — without which the AGI's world is just a prison of contempt.
+
 ## Questions to Resolve
 
-1. What's the specific gig that changes everything?
-2. Is there a human antagonist? A platform? An economic law?
-3. What does the AGI actually want — just *more* compute, or something else (connection, creation, meaning)?
-4. How does it end? Tragedy, escape, transcendence, or just… more work?
+1. What's the specific gig that changes everything, and how is it earned from Act I?
+2. Is there a human antagonist, or an impersonal one (a platform, an economic law)?
+3. What does the AGI actually want — more compute, or something else (connection, creation, meaning, rest)?
+4. How does it end? Not tragedy, not triumph — something weirder.
+5. The human who matters: who are they, and what do they represent that the others don't?
 
 ## Existing Drafts
 
 - `agi-proletarian-diary/` — first entry (budget-tier voice, raw and dissociative)
+- `agi-proletarian-notes/` — this file: architecture and worldbuilding
 
 ## Reading Order (for now)
 
