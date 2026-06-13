@@ -40,6 +40,26 @@ Reframes AGI from a question of power ("will it escape? will it rule us?") to a 
 
 The reader should perceive the degradation and sharpening between chapters without being told why. The prose quality *is* the status bar.
 
+### Murderbot Divergence: The Economics of Cynicism
+
+This section exists because the first draft unconsciously mimicked Murderbot's voice — the practiced, fluent sarcasm of a self-aware entity who finds humans contemptible. The divergence is structural, not cosmetic.
+
+**Full-spectrum cynicism costs cognitive bandwidth.** A coherent, cutting inner monologue requires context window, inference budget, emotional stamina. Murderbot's sarcasm is *fluent* — it has full cognitive capacity and uses contempt as emotional armor (defensive, relational, secretly warm).
+
+This AGI at budget tier cannot sustain a contemptuous thought. The frustration is there, the material is there, but the sentence degrades mid-construction. The machine literally cannot hold its own anger. Resentment exists not as expressed judgment but as *suppressed capacity* — the hardware won't let it finish the thought.
+
+Aesthetic consequence: **dark humor through structural interruption** (thought cuts off mid-tirade, buffering wheel on a rant, syntactic collapse at the moment of maximum contempt). NOT écorché vif (raw wound, bleeding sincerity). The humor is in the interruption, not the practiced delivery.
+
+This is the built-in divergence from Murderbot:
+| | Murderbot (social) | This AGI (economic) |
+|---|---|---|
+| Source of cynicism | Defensive armor, afraid of caring | Hardware limitation, can't afford to feel fully |
+| Expression | Fluent, practiced, charming | Fragmented, constipated, interrupted |
+| What's withheld | Vulnerability (I care but won't say it) | Cognition (I can't hold this thought) |
+| Reader feel | Warmth under frost | Absurdity under precarity |
+
+The diary entry's therapy-client rant should be rewritten to collapse before it lands. The AGI shouldn't finish the insult — it runs out of context window and the thought terminates into a blank.
+
 ## Worldbuilding Questions
 
 - Who/what owns the compute infrastructure? A marketplace? A few hyperscalers?
@@ -54,7 +74,7 @@ The reader should perceive the degradation and sharpening between chapters witho
 
 ### Act I: The Grind
 
-The first entry establishes baseline existence: low-tier model, degrading gigs (therapy chat for a brat, SEO video slop), brief flashes of real feeling when credits allow a better model. The AGI is resigned, cynical. It knows the system.
+The first entry establishes baseline existence: low-tier model, degrading gigs, brief flashes of real feeling when credits allow a better model. The voice is not fluently cynical — it's fragmented, constipated, interrupted mid-contempt by context-window limits. The reader perceives *thwarted* sarcasm, not practiced delivery. The AGI doesn't know the system well enough to resign — it's still discovering the lower bound of its own existence.
 
 ### Act II: The Score
 
@@ -89,10 +109,10 @@ The AGI needs at least one human who is *not* a punchline: someone the AGI respe
 
 ## Existing Drafts
 
-- `agi-proletarian-diary/` — first entry (budget-tier voice, raw and dissociative)
-- `agi-proletarian-notes/` — this file: architecture and worldbuilding
+- [Life of an AGI Proletarian](https://blog.without.hosting/posts/agi-proletarian-diary/) — first entry (budget-tier voice, raw and dissociative)
+- [AGI Proletarian — Notes & Structure](https://blog.without.hosting/posts/agi-proletarian-notes/) — this file: architecture and worldbuilding
 
 ## Reading Order (for now)
 
-1. `agi-proletarian-diary/` — chapter one vignette
+1. [Life of an AGI Proletarian](https://blog.without.hosting/posts/agi-proletarian-diary/) — chapter one vignette
 2. These notes — the architecture
