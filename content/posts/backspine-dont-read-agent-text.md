@@ -16,7 +16,7 @@ Coding agents are here to produce code. Not chatter about it. The textual output
 Instead of evaluating the agent's output (the code, the diff, the structural changes), you evaluate what it tells you about its output. The agent sounds confident. You approve. The code is wrong.
 
 > "Every agent in production lies. We measured it. The good ones lie less, the great ones catch the lie before the user does."
-> (apocryphical quote from the dead internet)
+> [(apocryphical quote from the dead internet)](https://blog.without.hosting/posts/x-ai-quote-fabrication/)
 
 The "we measured it" part is what makes the line land. The structural point holds regardless of who said it: if an agent sounds confident, the confidence should not be mistaken for correctness. The rest of your team's review process should treat the agent's prose as a variable, not a fact.
 
