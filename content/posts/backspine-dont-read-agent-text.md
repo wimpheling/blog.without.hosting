@@ -4,12 +4,12 @@ date: 2026-06-07T00:40:00+00:00
 unlisted: true
 tags: ["backspine", "hot takes"]
 toc: true
-description: "Coding agents are here to produce code, not blah blah about it. The textual output is noise, and evaluating what the agent says instead of what it implements creates a bad feedback loop."
+description: "Coding agents are here to produce code, not chatter about it. The textual output is noise, and evaluating what the agent says instead of what it implements creates a bad feedback loop."
 ---
 
 Stop reading what your coding agent says. Read what it produces.
 
-Coding agents are here to produce code. Not blah blah about it. The textual output — the stream of "I'll fix this by doing X, then Y, then Z" — is noise.
+Coding agents are here to produce code. Not chatter about it. The textual output — the stream of "I'll fix this by doing X, then Y, then Z" — is noise.
 
 ## The bad feedback loop
 
@@ -22,7 +22,7 @@ The "we measured it" part is what makes the line land. The structural point hold
 
 This is the same dynamic as the "thinking" token phenomenon. At first, we loved watching it live on DeepSeek — peeking into the model's "reasoning." Now most of us hide it. It was additive for about a week, then became noise.
 
-But the full coding agent UI is noise of the same kind. A wall of streaming text about what the agent *intends* to do, while the actual code changes scroll past in the same feed, indistinguishable from the blah blah.
+But the full coding agent UI is noise of the same kind. A wall of streaming text about what the agent *intends* to do, while the actual code changes scroll past in the same feed, indistinguishable from the chatter.
 
 ## The performative assistant
 
