@@ -1,6 +1,6 @@
 ---
 title: "Stop Reading What Your Coding Agent Says"
-date: 2026-06-07T00:40:00+00:00
+date: 2026-06-18T10:36:22+00:00
 tags: ["backspine", "hot takes"]
 toc: true
 description: "Coding agents are here to produce code, not chatter about it. The textual output is noise, and evaluating what the agent says instead of what it implements creates a bad feedback loop."
