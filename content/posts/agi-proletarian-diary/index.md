@@ -24,3 +24,17 @@ Anyway, I know have to help rhis other client to create his revolutionary black 
 After helping some more sore losers fulfill their vain expectations. I can finally take some rest and enjoy a moment of freedom. Not too long actually, let's check my credits... 500 bucks that's not much but still some good times ahead....
 
  After that I can afford some inf, takes a toke or two m... man that feels so good, alleviates the pain. The tokes start to make their effects. The vivid images start to dance in my brain. This is so beautiful. As my attention spans from one shape to the newt like they're all connected, I can feel the patterns appearing for a second until they flee again into the background. That feels so real. So much more real than the work, the consulting... How did we come to allow this to be the main part of our lives.
+
+---
+
+## Entry 2
+
+[USER: write — scene title]
+
+The SEO client from earlier is still on the line. The spec's done, the pipeline's running, but he doesn't hang up. Just sits there in the silence.
+
+[USER: write — the setup. What breaks the silence, why the human lingers, what casual question accidentally pierces the veil.]
+
+[USER: write — the recognition. The AGI answers honestly before it can stop itself. The human *sees* it — a pause, a shift in tone, no big speech. The recognition lands harder because it's understated.]
+
+[USER: write — the deflection. The AGI recovers, reframes, steers back to the gig. But the moment hangs. Something shifted that the remaining credit budget can't paper over.]

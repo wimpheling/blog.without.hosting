@@ -183,12 +183,13 @@ def collect_candidates() -> list[dict]:
                 continue
             fm = _extract_front_matter(text)
             unlisted = _is_true(fm.get("unlisted"))
+            slug = path.parent.stem if path.name == "index.md" else path.stem
             candidates.append({
                 "kind": "post",
                 "id": path.relative_to(REPO).as_posix(),
                 "title": _title(path, fm),
                 "unlisted": unlisted,
-                "url": f"https://blog.without.hosting/posts/{path.stem}/",
+                "url": f"https://blog.without.hosting/posts/{slug}/",
                 "mtime": path.stat().st_mtime,
                 "excerpt": text[:900].replace("\n", " "),
             })

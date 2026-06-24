@@ -1,7 +1,7 @@
 ---
 name: blog-writer-workflow
 description: "Operate the user's Hugo blog writer/editor profile: ramble-to-draft, repo edits, commit/push, and publish gate."
-version: 1.0.0
+version: 1.0.1
 author: Hermes Agent
 license: MIT
 platforms: [linux]
@@ -87,11 +87,21 @@ Implementation notes:
 - `layouts/partials/posts/edits.html` renders `.Site.Data.edits` at the bottom of posts.
 - If the public `Edits` block disappears, check: commit pushed, notes ref pushed, build script ran in Netlify logs.
 
+### Guard pitfalls
+
+**Guard blocks post deletion.** Deleting a post file that has `unlisted: true` triggers the guard with "Refusing to commit: this diff appears to publish a post (removed/unset unlisted:true or draft:true)." The guard sees the `unlisted: true` line vanish from the diff and cannot distinguish file deletion from unlist→publish transitions. When the user explicitly confirmed deletion in the current conversation, bypass with:
+
+```bash
+ALLOW_PUBLISH=1 /home/ubuntu/.hermes/profiles/blog-writer/scripts/blog_commit_push.py "chore: remove post-name"
+```
+
+Do NOT bypass for actual publish actions (removing `unlisted: true` from a post whose file stays in the repo) without explicit user validation.
+
 Environment knobs:
 
 - `SKIP_PUSH=1` — commit locally without pushing.
-- `ALLOW_PUBLISH=1` — bypass publish guard only after explicit current-chat user approval.
-- `HERMES_AUTHOR=hermes` — override default author for plain `edit:` commits.
+- `ALLOW_PUBLISH=1` — bypass publish guard only after explicit current-chat user approval. Required for deletions AND for actual unlist→publish transitions.
+- `HERMES_AUTHOR=*** — override default author for plain `edit:` commits.
 
 If the change intentionally unlists → publishes after explicit user approval:
 
