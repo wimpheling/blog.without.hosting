@@ -9,9 +9,9 @@ description: "Deux règles de composition enforceées par des linters custom —
 
 C'est le truc dont je suis le plus fier dans mon archi front.
 
-Les générateurs de code IA produisent facilement du slop non structuré quand il s'agit d'UI. Demande à un agent de construire une page, et il va générer une constellation unique de `div` avec des classes Tailwind brutes — espacement différent, layout différent, tout légèrement différent — à chaque fois. Le même élément conceptuel rendu de douze façons dans douze fichiers parce qu'il n'y a aucune raison structurelle de faire autrement. Le coût en tokens d'inliner est zéro. Le coût de composer est non nul. L'IA optimise pour le coût token.
+Les générateurs de code IA produisent facilement du slop non structuré quand il s'agit d'UI. Demande à un agent de construire une page, et il va générer une constellation unique de `div` avec des classes Tailwind brutes — espacement différent, layout différent, tout légèrement différent — à chaque fois. Le même élément conceptuel rendu de douze façons dans douze fichiers parce qu'il n'y a aucune raison structurelle de faire autrement. Le coût en tokens d'écrire directement est zéro. Le coût de composer est non nul. L'IA optimise pour le coût token.
 
-Ce n'est pas un problème de prompt. Tu ne peux pas demander à une IA d'être "cohérente avec les composants" et espérer que ça marche — l'incitation est mauvaise. L'IA va être d'accord et puis inliner quand même, parce que c'est ce à quoi ressemble l'optimisation de tokens à l'étape de génération.
+Ce n'est pas un problème de prompt. Tu ne peux pas demander à une IA d'être "cohérente avec les composants" et espérer que ça marche — l'incitation est mauvaise. L'IA va être d'accord et puis écrire directement quand même, parce que c'est ce à quoi ressemble l'optimisation de tokens à l'étape de génération.
 
 La solution est structurelle : rendre l'erreur impossible.
 
@@ -28,7 +28,7 @@ Et l'agent s'est adapté.
 
 L'agent a arrêté le slop. Il a commencé à vérifier la librairie de composants avant d'en créer de nouveaux. Quand un composant fonctionnait presque, il l'étendait plutôt que d'en créer un frère. Il a composé ses pages avec une grammaire limitée d'éléments d'UI.
 
-Ce n'était pas un accident — c'était le résultat attendu. Les contraintes ont été conçues pour inverser la surface de coût. Avant les linters, le chemin token le moins cher était d'inliner. Après les linters, le chemin le moins cher est le bon : du HTML brut dans une page = une erreur de build, qui signifie un cycle de régénération, qui coûte plus de tokens que de faire les choses correctement du premier coup. L'agent s'est adapté parce qu'il n'avait pas d'option moins coûteuse.
+Ce n'était pas un accident — c'était le résultat attendu. Les contraintes ont été conçues pour inverser la surface de coût. Avant les linters, le chemin token le moins cher était d'écrire directement. Après les linters, le chemin le moins cher est le bon : du HTML brut dans une page = une erreur de build, qui signifie un cycle de régénération, qui coûte plus de tokens que de faire les choses correctement du premier coup. L'agent s'est adapté parce qu'il n'avait pas d'option moins coûteuse.
 
 Le design system a émergé des contraintes, pas de la documentation. Les composants sont peu nombreux et généraux. Les pages sont des compositions. La cohérence visuelle n'est pas le résultat d'une palette curatée ou d'une échelle de spacing — c'est la conséquence mécanique du même petit ensemble de composants qui rend tout. La grammaire des éléments disponibles est petite. Le résultat est cohérent.
 
