@@ -1,7 +1,6 @@
 ---
 title: "No Prompt, Just Linters"
-date: 2026-06-06T23:00:00+00:00
-unlisted: true
+date: 2026-06-28T00:00:00+00:00
 tags: ["backspine"]
 toc: false
 description: "Two composition rules enforced by custom linters — and an AI code generator that started managing its own design system without a single prompt about it."
