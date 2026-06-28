@@ -1,5 +1,6 @@
 baseURL = "https://blog.without.hosting/"
-locale = "en-US"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
 title = "Without hosting"
 theme = "PaperMod"
 enableEmoji = true
@@ -44,11 +45,26 @@ paginate = 10
     [params.analytics.google]
       SiteVerificationTag = "G-PXR780XCW2"
 
-[menu]
-  [[menu.main]]
-    name = "Posts"
-    url = "/posts/"
+[languages]
+  [languages.en]
+    languageName = "English"
     weight = 1
+    locale = "en-US"
+
+    [[languages.en.menu.main]]
+      name = "Posts"
+      url = "/posts/"
+      weight = 1
+
+  [languages.fr]
+    languageName = "Français"
+    weight = 2
+    locale = "fr-FR"
+
+    [[languages.fr.menu.main]]
+      name = "Articles"
+      url = "/fr/posts/"
+      weight = 1
 
 [services]
   [services.instagram]
