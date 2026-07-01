@@ -1,5 +1,6 @@
 ---
 title: "Coder des Agents, C'est Juste du Code"
+translationKey: "coding-agents-are-just-code"
 description: "Tool calling, MCP, boucles agentiques — rien de magique. Une simple boucle while. La vraie compétence, c'est concevoir la structure rigide autour du LLM, et c'est là que va le métier de dev."
 date: 2026-07-01
 ---

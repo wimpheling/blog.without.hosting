@@ -1,5 +1,6 @@
 ---
 title: "Coding Agents Are Just Code"
+translationKey: "coding-agents-are-just-code"
 description: "Tool calling, MCP, agentic loops — none of it is magic. It is just a while loop. The real skill is designing the structure around the LLM, and that is where the dev job is going."
 date: 2026-07-01
 ---
