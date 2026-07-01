@@ -1,8 +1,7 @@
 {{- if .IsTranslated -}}
-{{- $currentLang := .Language.Lang -}}
 <div class="post-translation-banner">
   {{- range .Translations -}}
-    {{- if eq $currentLang "en" -}}
+    {{- if eq .Lang "fr" -}}
     🇫🇷 Ce post est disponible en français&nbsp;: <a href="{{ .Permalink }}">{{ .Title }}</a>
     {{- else -}}
     🇬🇧 This post is also available in English&nbsp;: <a href="{{ .Permalink }}">{{ .Title }}</a>
