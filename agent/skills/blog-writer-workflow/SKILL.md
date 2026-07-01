@@ -1,7 +1,7 @@
 ---
 name: blog-writer-workflow
 description: "Operate the user's Hugo blog writer/editor profile: ramble-to-draft, repo edits, commit/push, and publish gate."
-version: 1.0.1
+version: 1.1.0
 author: Hermes Agent
 license: MIT
 platforms: [linux]
@@ -14,112 +14,18 @@ metadata:
 
 Use this skill whenever the user asks to capture blog ideas, draft/edit Hugo posts, commit/push blog changes, publish/unlist an article, or send writing nudges.
 
-## Repository
+## Bilingual / Multilingual Posts
 
-- Repo path: `/home/ubuntu/.hermes/profiles/blog-writer/repo/blog.without.hosting`
-- Remote: `https://github.com/wimpheling/blog.without.hosting`
-- Posts: `content/posts/*.md`
-- Current cloned branch: `master` unless changed by GitHub later.
-- The Hugo repo is the source of truth for article content and article state.
+The Hugo site has multilingual support via `config.toml` `[languages]` (en + fr). When producing a parallel post in another language:
 
-## Hard Rules
+1. **Place FR post in `content/fr/posts/`** — NOT in `content/posts/`. The English default goes in `content/posts/`.
+2. **Add `_index.md`** in both `content/fr/` and `content/fr/posts/` — Hugo needs these branch bundle files to render section pages (e.g. `/fr/posts/`). Without them you get a 404.
+3. **Add `translationKey`** to both frontmatters when filenames differ between languages. Same key value on both posts. This links them as translations.
+4. **PaperMod's `translation_list.html`** can be overridden at `layouts/partials/translation_list.html`. The site uses a custom banner with flag emoji + clickable title, styled like the Edits section (CSS in `extend_head.html`).
+5. **Banner logic**: check the translation's language (`.Lang` inside `range .Translations`), NOT the current page's language — more robust across Hugo language-detection edge cases.
+6. **Publishing**: an already-published EN post with an FR version needs the `unlisted: true` removal on both independently.
 
-1. Article draft/publish state lives in front matter via the `unlisted` field.
-2. Do not maintain a separate editorial database for article state.
-3. Content edits may be committed and pushed directly to the default branch.
-4. **Draft = `unlisted: true`** (rendered at its URL, hidden from the posts list).
-5. **Published = no `unlisted` field, or `unlisted: false`** (listed normally).
-6. Never change `unlisted: true` to `unlisted: false` (or remove the field) — i.e., never unlist → publish — without explicit user validation in the current conversation.
-7. Do not use PRs to manage draft status.
-8. The Hugo site builds with `--buildDrafts` (or equivalent) so `draft: true` posts are NOT rendered. The `unlisted` convention replaces Hugo's built-in draft flag for content that should be reachable but hidden from listings.
-
-## Writing Loop
-
-1. Read the relevant post(s) under `content/posts/`.
-2. Extract the claim/thesis from the user's ramble.
-3. Suggest one concise next move, or edit the draft directly if asked.
-4. Preserve the user's voice: technical, opinionated, exploratory, sometimes bilingual English/French.
-   - Avoid over-polished, impersonal, wordy LLM prose. Keep rough edges when they make the post feel more authored.
-   - Do not inflate minor operational details into grand claims. If a section like "the interesting constraint" overstates something already covered, cut it rather than making it sound profound.
-5. When revisiting old/draft clusters, do not flatten the user's idea into a generic "this aged badly" take. Separate:
-   - what was hype-era framing or vocabulary;
-   - what remains structurally true;
-   - what the user corrects as the deeper durable claim.
-   A good pattern is a revision/retrospective draft that starts from the published article, names what changed, salvages the good ideas, and proposes a modern stack or next thesis.
-6. For dated article clusters, propose an editorial consolidation path instead of mechanically polishing every draft. Identify what aged badly, what still holds, and a stronger modern framing.
-7. After editing files:
-   - Run `git diff --check`.
-   - Review the diff for accidental publishing/unlisting.
-   - Commit and push.
-   - In the final reply, include a read link (production blog URL).
-
-## Commit/Push Helper
-
-Use the helper script after blog edits. Do **not** use raw `git commit` for content edits: the helper is the path that enforces the publish guard and attaches git-note metadata for the public `Edits` log.
-
-```bash
-/home/ubuntu/.hermes/profiles/blog-writer/scripts/blog_commit_push.py "draft: update article title"
-```
-
-### Public edit log via git notes
-
-Rendered-post edits are tracked in **git notes**, not article front matter. This avoids the circular-hash bug where a post front matter entry tries to contain the commit hash of the commit that also contains that entry.
-
-Commit-message conventions:
-
-- `edit: <description>` — attach a git note; author defaults to `$HERMES_AUTHOR` or `bully`.
-- `edit[hermes]: <description>` — attach a git note with explicit author `hermes`.
-- `edit[bully]: <description>` — attach a git note with explicit author `bully`.
-- `draft:`, `chore:`, `publish:`, etc. — normal commit; no public edit note.
-
-Keep `edit:` descriptions short and reader-facing because they render on the post. Good examples:
-
-- `edit: fix typo "A Anthropic" → "An Anthropic"`
-- `edit[hermes]: tighten intro and source caveat`
-- `edit[bully]: add missing link to the X thread`
-
-Implementation notes:
-
-- Notes live in `refs/notes/commits`; pushing `HEAD` alone is not enough.
-- The helper script pushes both `HEAD` and `refs/notes/commits`.
-- Netlify runs `python3 scripts/build_edits.py && hugo --gc --minify --buildFuture`.
-- `scripts/build_edits.py` reads git notes and generates gitignored `data/edits/<slug>.json` files for Hugo.
-- `layouts/partials/posts/edits.html` renders `.Site.Data.edits` at the bottom of posts.
-- If the public `Edits` block disappears, check: commit pushed, notes ref pushed, build script ran in Netlify logs.
-
-### Guard pitfalls
-
-**Guard blocks post deletion.** Deleting a post file that has `unlisted: true` triggers the guard with "Refusing to commit: this diff appears to publish a post (removed/unset unlisted:true or draft:true)." The guard sees the `unlisted: true` line vanish from the diff and cannot distinguish file deletion from unlist→publish transitions. When the user explicitly confirmed deletion in the current conversation, bypass with:
-
-```bash
-ALLOW_PUBLISH=1 /home/ubuntu/.hermes/profiles/blog-writer/scripts/blog_commit_push.py "chore: remove post-name"
-```
-
-Do NOT bypass for actual publish actions (removing `unlisted: true` from a post whose file stays in the repo) without explicit user validation.
-
-Environment knobs:
-
-- `SKIP_PUSH=1` — commit locally without pushing.
-- `ALLOW_PUBLISH=1` — bypass publish guard only after explicit current-chat user approval. Required for deletions AND for actual unlist→publish transitions.
-- `HERMES_AUTHOR=*** — override default author for plain `edit:` commits.
-
-If the change intentionally unlists → publishes after explicit user approval:
-
-```bash
-ALLOW_PUBLISH=1 /home/ubuntu/.hermes/profiles/blog-writer/scripts/blog_commit_push.py "publish: article title"
-```
-
-If push fails, GitHub PAT is probably missing. Ask the user for a PAT and run:
-
-```bash
-BLOG_GITHUB_PAT='TOKEN' /home/ubuntu/.hermes/profiles/blog-writer/scripts/configure_git_auth.py
-```
-
-## Revision/Retrospective Posts
-
-For a detailed reusable pattern, see `references/revision-retrospective-posts.md`.
-
-Use it when the user revisits old published posts or dated draft clusters and wants to recover the durable thesis while acknowledging what aged badly.
+For detail and the exact template: see `references/bilingual-hugo-setup.md`.
 
 ## Article Style Guidelines
 
@@ -141,45 +47,8 @@ Use these as defaults when drafting or editing posts:
 - **Images**: if images are used, prefer informative images and give them meaningful alt text. Decorative images should not pretend to carry SEO meaning.
 - **Voice override**: these rules must not erase the user's voice. Preserve rough edges, opinions, and exploratory tone. Do not turn posts into polished institutional web copy.
 
-## Nudge Style
+### Editorial Pitfalls
 
-Nudges should be:
-- short, casual, and specific
-- based on an active draft or captured idea
-- framed as an easy next move
-- feel like a fluent conversation about the subject matter, not a dry reminder
-- include a read link when pointing to a post (production blog URL)
-
-Good:
-- "Your LLM island idea has a strong core: generated code as a scoped interactive island inside deterministic structure. Want to turn that into the intro?"
-
-Bad:
-- "Reminder: please write today."
-
-## Blog Nudge Automation
-
-Use this when modifying the blog-writer nudge cron, `/nudge`, `/nudge-state`, or related Telegram commands.
-
-- Main profile script: `/home/ubuntu/.hermes/profiles/blog-writer/scripts/nudge_tick.py`.
-- Telegram command plugin: `/home/ubuntu/.hermes/profiles/blog-writer/plugins/blog-writer-commands/__init__.py`.
-- State file: `/home/ubuntu/.hermes/profiles/blog-writer/scheduler/nudge_state.json`.
-- Keep the architecture split by entry point:
-  - scheduled cron path: checks active window, creates/uses daily plan, sends only when a planned slot is due, and may be silent;
-  - manual `/nudge` path: generates immediately, skips active-window and planned-slot checks, and must not consume scheduled slots;
-  - `/nudge-state` path: read-only state inspection and must not mutate state.
-- Generation should remain transport-neutral: return/print text; cron delivery and Telegram command response handle sending.
-- Manual and scheduled nudges should still update recent nudge history so candidate selection avoids repeating the same post/idea.
-- Validate changes with at least: Python compile of the script/plugin, state command smoke test, manual path test with a fake generator/no LLM call, plugin command registration check, and `git diff --check` in the Hugo repo.
-- Do not restart the gateway automatically if it may interrupt the active user session; tell the user to run `/restart` when ready.
-
-## Nudge Automation Design
-
-When modifying scheduled or Telegram-triggered blog nudges, keep scheduling, generation, and delivery separate. Cron and manual commands should call different service entry points instead of sharing one flag-heavy `maybe_send_nudge()` flow:
-
-- `run_cron_tick(deps)`: scheduled path; respects active window, daily plan, and due slots; may be silent.
-- `generate_manual_nudge(deps)`: manual `/nudge`; skips scheduling gates and daily slot consumption, but still uses candidate selection, recent-history avoidance, LLM generation, and read-link rules.
-- `get_state_json(deps)`: read-only `/nudge-state`; returns pretty state or a short missing-state message.
-
-Manual nudges should not consume scheduled slots, but should update recent nudge/post history so the next scheduled nudge does not repeat the same draft.
-
-Detailed architecture and test matrix: `references/nudge-automation-architecture.md`.
+- **"I see what nobody else sees" framing** — avoid this. The user called this out as presumptuous. When expressing frustration about a gap between perceived reality and market narrative, frame it as a gap between *hype and actual simplicity*, not as the user seeing something invisible to others. Acknowledge that plenty of people already see the same thing — the frustration is that *the public conversation* stays stuck on the wrong story.
+- Do NOT inflate minor operational details into grand claims. If a section like "the interesting constraint" overstates something already covered, cut it rather than making it sound profound.
+- Do NOT use numbered arcs, causality claims, triplet negatives (no X no Y just Z), curtain lines, meta-commentary, or bot self-justification.

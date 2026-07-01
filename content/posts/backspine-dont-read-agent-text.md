@@ -1,5 +1,6 @@
 ---
 title: "Stop Reading What Your Coding Agent Says"
+translationKey: "backspine-dont-read-agent-text"
 date: 2026-06-18T10:36:22+00:00
 tags: ["backspine", "hot takes"]
 toc: true
