@@ -34,13 +34,15 @@ L'agent cesse d'être une boîte noire qui marche parfois. Il devient un program
 
 ## La Partie Frustrante
 
-Je vois ce monde s'ouvrir devant moi et j'ai l'impression que c'est le futur du métier de développeur. Mais presque personne — pas même les autres devs, pas les managers — ne le perçoit.
+Je vois ce monde s'ouvrir — la possibilité de construire des agents précis, testables, programmables — et j'ai l'impression que c'est une direction fondamentale pour le métier.
 
-Il y a une espèce d'accord collectif étrange selon lequel les agents de code sont mystérieux, que leurs internes sont le domaine des chercheurs en ML, que la partie "agentique" est là où la magie opère et qu'il ne faut pas y toucher.
+Ce qui est frustrant, c'est l'écart entre cette réalité et la conversation publique autour des coding agents. La narration dominante, c'est la boîte noire magique : "L'agent a raisonné, planifié, exécuté." On parle des agents comme s'ils étaient des entités mystérieuses, comme si leurs mécanismes internes étaient le domaine des chercheurs en ML.
 
 Mais le ML est dans le modèle, pas dans la boucle. L'inférence, c'est le dur. La boucle, c'est juste du code.
 
 Les entreprises qui construisent Codex et Claude Code résolvent de vrais problèmes — sandboxing, caching, sorties structurées à l'échelle, design de protocole. Mais le pattern de base "appelle LLM, parse la réponse, appelle peut-être un outil, répète" n'est pas un de ces problèmes difficiles. C'est la première chose que tu écris en ouvrant les docs de l'API.
+
+Bref, l'écart entre le battage médiatique et la simplicité réelle du pattern — c'est ça qui est frustrant. Pas que personne ne voie. Beaucoup voient. Mais la conversation, elle, reste bloquée sur le storytelling agentique.
 
 ## La Vraie Compétence
 

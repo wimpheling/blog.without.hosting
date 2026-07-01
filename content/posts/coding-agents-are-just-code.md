@@ -34,13 +34,15 @@ The agent stops being a black box that sometimes works. It becomes a program tha
 
 ## The Frustrating Part
 
-I see this world opening up in front of me and it feels like the actual future of my job as a developer. But almost nobody — not even other devs, not managers — seems to perceive it.
+I see this world opening up — the possibility of building precise, testable, programmable agents — and it feels like a fundamental direction for the job.
 
-There is a strange collective agreement that coding agents are mysterious, that their internals are the domain of ML researchers, that the "agentic" part is where the magic happens and you should not touch it.
+What frustrates me is the gap between this reality and the public conversation around coding agents. The dominant narrative is the magic black box: "the agent reasoned, planned, executed." People talk about agents as if they were mysterious entities, as if their internals were the domain of ML researchers.
 
 But the ML is in the model, not the loop. The inference is the hard part. The loop is just code.
 
 The companies building Codex and Claude Code are solving real problems — sandboxing, caching, structured outputs at scale, protocol design. But the basic pattern of "call LLM, parse response, maybe call a tool, repeat" is not one of those hard problems. It is the first thing you write when you hit the API docs.
+
+The gap between the hype and the actual simplicity of the pattern — that is what is frustrating. Not that nobody sees it. Plenty of people do. But the public conversation stays stuck on the agentic storytelling.
 
 ## The Real Skill
 
