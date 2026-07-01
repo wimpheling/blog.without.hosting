@@ -1,0 +1,5 @@
+{
+  "edited_at": "2026-07-01T13:32:55+00:00",
+  "description": "add translationKey and move FR post to content/fr/posts/ for Hugo i18n",
+  "author": "bully"
+}
