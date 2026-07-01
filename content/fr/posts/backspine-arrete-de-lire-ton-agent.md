@@ -5,7 +5,6 @@ tags: ["backspine", "hot takes"]
 toc: true
 translationKey: "backspine-dont-read-agent-text"
 description: "Les agents de code sont là pour produire du code, pas pour en parler. Leur sortie textuelle est du bruit, et évaluer ce qu'ils disent plutôt que ce qu'ils implémentent crée une mauvaise boucle de feedback."
-unlisted: true
 ---
 
 Arrête de lire ce que ton agent de code raconte. Lis ce qu'il produit.
@@ -39,20 +38,12 @@ Mais le code, c'est là où le fantasme devient coûteux. La performance de serv
 
 Le problème n'est pas que l'assistant a une personnalité. Le problème est que la personnalité *devient* l'interface.
 
-## Le contre-argument
+## La surface, c'est la sortie
 
-"Mais il y a trop de code produit. L'explication verbale de l'IA est la seule couche de présentation utilisable."
+La surface d'un agent de code, c'est le code. Pas un chat sur le code. Pas un plan pour le code. Pas un résumé du code.
 
-C'est exactement le problème. La couche de présentation *se trouve* être du texte généré par LLM parce que personne n'en a conçu une vraie. L'agent parle parce que c'est le mode par défaut de l'outil — il parle. Pas parce que la parole est la bonne interface pour la revue de code.
+Le code *est* l'interface. Le diff *est* la couche de présentation. La revue de l'artefact *est* la conversation avec l'agent.
 
-## La thèse
+Tout le reste — les tokens de raisonnement, les plans, les "je vais corriger ça en faisant X" — c'est du commentaire sur le travail, pas le travail. Et plus tu en lis, moins tu regardes ce qui a réellement été produit.
 
-On a besoin d'une couche de présentation qui n'est pas créée par un LLM. Ou à peine.
-
-Ce que ça veut dire :
-
-- **Définir des éléments structurels.** Présenter les changements sous la forme la plus claire possible — un vrai champ de recherche, pas une réflexion après-coup.
-- **Le code vit dans des îlots** à l'intérieur d'éléments structurels. Pas dans un flux textuel linéaire. Isolé, délimité, reviewable.
-- **L'interface doit remonter les changements structurels sémantiquement.** Tu dois voir ce qui a changé au niveau de l'architecture, pas au niveau du token. Et pouvoir zoomer sur une implémentation particulière quand tu en as besoin.
-
-Auto-promotion éhontée : je travaille sur la réponse. [Backspine](https://blog.without.hosting/posts/backspine-presentation/) est ma réponse, ou du moins la tentative.
+Arrête de lire ce que ton agent raconte. Lis ce qu'il produit.

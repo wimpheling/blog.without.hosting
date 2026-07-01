@@ -38,20 +38,12 @@ But coding is where the fantasy becomes expensive. The performance of helpfulnes
 
 The problem is not that the assistant has a personality. The problem is that the personality becomes the interface.
 
-## The counter-argument
+## The surface is the output
 
-"But there's too much code output. The AI's verbal explanation is the only usable presentation layer."
+The surface of a coding agent should be the code. Not a chat about the code. Not a plan for the code. Not a summary of the code.
 
-That's exactly the problem. The presentation layer *happens* to be LLM-generated text because no one designed a real one. The agent talks because that's the default mode of the tool — it speaks. Not because speech is the right interface for code review.
+The code *is* the interface. The diff *is* the presentation layer. The artifact review *is* the conversation with the agent.
 
-## The thesis
+Everything else — the thinking tokens, the plans, the "I'll fix this by doing X" — is commentary on the work, not the work. And the more of it you read, the less you actually look at what was produced.
 
-We need a presentation layer that is not created by an LLM. Or barely.
-
-What that means:
-
-- **Define structural elements.** Present changes in the clearest possible form — a real research field, not an afterthought.
-- **Code lives in islands** inside structural elements. Not in a linear stream of text. Isolated, scoped, reviewable. ([draft: backspine code islands])
-- **The UI should surface structural changes semantically.** You should see what changed at the architecture level, not the token level. And be able to zoom in on a particular implementation when you need to. ([draft: backspine structural changes semantic])
-
-Shameless self-promotion: I'm working on the answer. [Backspine](https://blog.without.hosting/posts/backspine-presentation/) is my answer, or at least the attempt at it.
+Stop reading what your coding agent says. Read what it produces.
