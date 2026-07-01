@@ -2,7 +2,6 @@
 title: "Coding Agents Are Just Code"
 description: "Tool calling, MCP, agentic loops — none of it is magic. It is just a while loop. The real skill is designing the structure around the LLM, and that is where the dev job is going."
 date: 2026-07-01
-unlisted: true
 ---
 
 I recently started writing my coding agents in TypeScript with the Vercel AI SDK.
