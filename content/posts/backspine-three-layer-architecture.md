@@ -13,25 +13,17 @@ This post develops the methodology that follows from that: a three-layer archite
 
 ```mermaid
 flowchart LR
-  subgraph L1["Layer 1 — Invariants"]
-    direction LR
-    A["Structural rules<br/>Type enforcement<br/>Custom linting"]
-    A1["👤 Hard engineering<br/>Human owns"]
+  subgraph L1["Layer 1<br/>Invariants"]
+    A1["Structural rules<br/>Type enforcement<br/>Custom linting<br/><br/><b>👤 Hard engineering</b><br/>Human owns"]
   end
 
-  subgraph L2["Layer 2 — Structural content"]
-    direction LR
-    B["Routes, schemas<br/>Workflows, test scenarios<br/>Declarative, turing-incomplete"]
-    B1["🤝 AI assists<br/>Human specifies"]
+  subgraph L2["Layer 2<br/>Structural content"]
+    B1["Routes, schemas<br/>Workflows, test scenarios<br/>Declarative, turing-incomplete<br/><br/><b>🤝 AI assists</b><br/>Human specifies"]
   end
 
-  subgraph L3["Layer 3 — Procedural content"]
-    direction LR
-    C["Handlers, business logic<br/>Data transformations, queries<br/>Turing-complete code"]
-    C1["🤖 AI generates<br/>Human reviews"]
+  subgraph L3["Layer 3<br/>Procedural content"]
+    C1["Handlers, business logic<br/>Data transformations, queries<br/>Turing-complete code<br/><br/><b>🤖 AI generates</b><br/>Human reviews"]
   end
-
-  L1 --> L2 --> L3
 ```
 
 The idea is simple. Any project can be divided into three layers, each with a different relationship to AI generation:
