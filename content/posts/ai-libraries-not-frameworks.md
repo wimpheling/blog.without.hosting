@@ -81,3 +81,5 @@ The README says it explicitly: *"AI coding agents are surprisingly good at worki
 This is not a thought experiment. The constraint-first approach is packaged, published (`npm create backbone-template`), and used for real projects. It is the argument this post makes, shipped as a template.
 
 For the full project pitch: [Backspine — Project Presentation](https://blog.without.hosting/posts/backspine-presentation/).
+
+*This constraint-first approach suggests a broader methodology for vibe coding. The follow-up post develops it: [three layers — invariants, structural content, and unstructured content — and what each means for AI generation](https://blog.without.hosting/posts/backspine-three-layer-architecture/).*
