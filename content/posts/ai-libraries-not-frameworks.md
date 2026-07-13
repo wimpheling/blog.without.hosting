@@ -71,7 +71,10 @@ AI generates the feature code. You define the rules. The architecture stays flat
 
 I built a project template called [Backbone](https://github.com/wimpheling/backbone-template-v1) that is exactly what this post describes — a project-specific framework for a specific stack (Rust backend, React frontend, ConnectRPC, SQLite, Playwright) designed to work well with AI coding agents.
 
-The template ships with custom dylint rules that enforce architecture boundaries no generic framework would dare impose: `sqlx` calls only in database modules, environment variables only in configuration modules, each RPC method in its own file, `ConnectError` construction only through a central adapter. These rules would be absurd in a general-purpose framework. They make perfect sense when the framework is authored for *your* class of problems.
+The template ships with custom lint rules that enforce architecture boundaries no generic framework would dare impose:
+
+- **Rust (dylint):** `sqlx` calls only in database modules, environment variables only in configuration modules, each RPC method in its own file, `ConnectError` construction only through a central adapter, no HTTP clients outside integration modules, Axum endpoints only in rest modules.
+- **React/TypeScript (oxlint plugin):** no direct imports from external UI libraries (MUI, Chakra, Antd, etc.) — all UI goes through the design-system boundary, no raw DOM JSX in app code — must use design system components, no direct `Error.message` access in catch blocks — must use the structured RPC error mapper. These rules would be absurd in a general-purpose framework. They make perfect sense when the framework is authored for *your* class of problems.
 
 The README says it explicitly: *"AI coding agents are surprisingly good at working inside rigid systems. They are much less reliable when the project leaves every architectural choice open."*
 
