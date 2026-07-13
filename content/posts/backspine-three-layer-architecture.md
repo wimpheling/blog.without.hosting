@@ -12,18 +12,12 @@ The previous post argued that AI makes building your own project-specific framew
 This post develops the methodology that follows from that: a three-layer architecture for vibe-coded software.
 
 ```mermaid
-flowchart LR
-  subgraph L1["Layer 1<br/>Invariants"]
-    A1["Structural rules<br/>Type enforcement<br/>Custom linting<br/><br/><b>👤 Hard engineering</b><br/>Human owns"]
-  end
+flowchart TD
+  L1["<b>Layer 1 — Invariants</b><br/>Structural rules, linting,<br/>type enforcement<br/><br/><b>👤 Human owns</b>"]
+  L2["<b>Layer 2 — Structural content</b><br/>Routes, schemas, workflows,<br/>test scenarios<br/><br/><b>🤝 AI assists</b>"]
+  L3["<b>Layer 3 — Procedural content</b><br/>Handlers, business logic,<br/>queries<br/><br/><b>🤖 AI generates</b>"]
 
-  subgraph L2["Layer 2<br/>Structural content"]
-    B1["Routes, schemas<br/>Workflows, test scenarios<br/>Declarative, turing-incomplete<br/><br/><b>🤝 AI assists</b><br/>Human specifies"]
-  end
-
-  subgraph L3["Layer 3<br/>Procedural content"]
-    C1["Handlers, business logic<br/>Data transformations, queries<br/>Turing-complete code<br/><br/><b>🤖 AI generates</b><br/>Human reviews"]
-  end
+  L1 --> L2 --> L3
 ```
 
 The idea is simple. Any project can be divided into three layers, each with a different relationship to AI generation:
