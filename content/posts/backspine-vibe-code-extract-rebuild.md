@@ -19,7 +19,24 @@ The power of AI and its ability to produce lots of code fast only makes it worse
 
 ## The Proposed Solution
 
-[USER: write — the thesis in your own words. The core claim: "once vibe coded, try to extract the shape of the prototype, and recode it from a new architecture." Expand on what "extract the shape" means operationally. What do you look at? Routes? Data model? Invariants? What do you throw away?]
+The idea is to structure the extract-and-rebuild as a deliberate process, not a gut feeling.
+
+### Step 1: Inventory
+
+List everything the prototype does (features) and everything that hurts (weak points).
+
+- **Features** — what user journeys exist? What endpoints? What database tables? What pages? What behavior does the code actually implement, regardless of how it implements it?
+- **Weak points** — what is fragile? What breaks when you touch it? What is hard to test? What has inconsistent patterns? What is duplicated? What has no error handling? What do you dread modifying?
+
+This is the raw material of the architecture decision. The features tell you what to keep. The weak points tell you what to redesign.
+
+### Step 2: Design from the Inventory
+
+[USER: write — this is the load-bearing insight. Given the inventory of features and weak points, how do you design the new architecture? Do you group features by concern? Do you extract the invariants from the weak points? Do you define module boundaries around the most painful divergence points? What is the actual decision process?]
+
+### Step 3: Rebuild
+
+[USER: write — what does the rebuild look like? Do you start from scratch with the new architecture and port features one by one? Do you refactor in place, carving out the clean structure from the messy one? How do you know the rebuild is complete?]
 
 ## Why This Works
 
