@@ -3,7 +3,7 @@ title: "AGENTS.md Is Useless"
 date: 2026-07-02
 tags: ["hot takes", "agents"]
 description: "The convention of writing special agent documentation files is based on a sci-fi trope — that LLMs need an esoteric format to understand a project. They don't. They read README.md just fine."
-unlisted: true
+unlisted: false
 ---
 
 There is a growing convention in open source: an `AGENTS.md` file, sometimes `CLAUDE.md`, sometimes `.cursorrules`. It is supposed to be the documentation *for the AI*, separate from the documentation *for the humans*.
@@ -67,7 +67,3 @@ There is one legitimate use case for AGENTS.md-like files: **project-specific be
 These are useful. But they are not documentation. They are configuration. And they should be formatted in a way that survives fragmentation — which means keeping them small, specific, and tool-independent.
 
 If your AGENTS.md is longer than 20 lines, you have a documentation problem masked as an agent problem.
-
----
-
-*This was originally a ramble that my blog-writing assistant turned into this post. The irony is not lost on me.*
