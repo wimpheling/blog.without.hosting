@@ -1,6 +1,6 @@
 ---
 title: "AGENTS.md Is Useless"
-date: 2026-07-02
+date: 2026-07-22
 tags: ["hot takes", "agents"]
 description: "The convention of writing special agent documentation files is based on a sci-fi trope — that LLMs need an esoteric format to understand a project. They don't. They read README.md just fine."
 unlisted: false
